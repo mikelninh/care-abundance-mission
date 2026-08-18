@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-08-18",
+  "baseline": {
+    "gdp_2025_eur_bn": 4469.8,
+    "population_2025_m": 83.5,
+    "real_gdp_growth_2025_pct": 0.2
+  },
+  "levers": [
+    {
+      "id": "ai",
+      "title": "AI deployment",
+      "metric": "+0.5 to +1.0pp annual labour-productivity growth across G7, central scenario",
+      "source": "OECD Foundations for Growth and Competitiveness 2026"
+    },
+    {
+      "id": "bureaucracy",
+      "title": "Once-only government + one-stop business",
+      "metric": "German corporate bureaucracy costs estimated ~0.7% GDP/year; once-only could roughly halve bureaucracy costs for firms and households",
+      "source": "OECD Germany 2025 / EU Survey 2025"
+    },
+    {
+      "id": "labour",
+      "title": "Make extra work always pay",
+      "metric": "149,000 FTE jobs + ~€4.5bn fiscal savings in cited simulation",
+      "source": "IMF Germany 2026 Article IV"
+    },
+    {
+      "id": "infrastructure",
+      "title": "Outcome-driven infrastructure",
+      "metric": "€500bn fund 2025–2036; €49.1bn federal share incl. KTF disbursed by 30 Jun 2026",
+      "source": "German Federal Ministry of Finance"
+    },
+    {
+      "id": "vietnam",
+      "title": "Germany–Vietnam Growth Corridor",
+      "metric": "€21bn+ 2025 trade; 500+ German firms in Vietnam; 4,000+ exporters; 200,000+ Vietnamese people in Germany",
+      "source": "German Federal Foreign Office"
+    },
+    {
+      "id": "evfta",
+      "title": "Use the trade highway",
+      "metric": "EU–Vietnam FTA eliminates 99% of tariffs and opens services/procurement markets",
+      "source": "European Commission"
+    }
+  ]
+}
