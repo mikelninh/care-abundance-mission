@@ -13,6 +13,7 @@ This file keeps current-law/public-data facts separate from CARE policy choices.
 
 ### Kindergeld in Grundsicherung
 
+- Since 1 July 2026 the cash benefit formerly called Bürgergeld is called Grundsicherungsgeld; some transitional material still uses the previous term.
 - The Bundesagentur states that Kindergeld counts as income when calculating Grundsicherungsgeld.
 - For children under 25 living in the parental household, Kindergeld is generally attributed to the child as income insofar as needed to cover the child's need.
 - Source: Bundesagentur für Arbeit, family support / SGB-II knowledge base.
