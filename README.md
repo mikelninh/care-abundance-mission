@@ -118,6 +118,8 @@ python openwork/simulate.py
 python family/simulate.py
 ```
 
+Family Guarantee logic has been independently exercised locally with **12 passing tests** plus the E2E simulator. Hosted GitHub Actions is only claimed when an actual workflow run is observed green.
+
 ## Next real-world proofs
 
 1. **Family Guarantee shadow pilot:** one benefits-advice/municipal partner, current-law vs CARE calculations, no money moved initially.
