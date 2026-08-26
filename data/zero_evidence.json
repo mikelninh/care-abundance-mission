@@ -1,0 +1,142 @@
+{
+  "as_of": "2026-08-27",
+  "principle": "Verified facts, model assumptions and political targets must never be mixed.",
+  "claims": [
+    {
+      "id": "de-child-poverty-rate-2025",
+      "status": "VERIFIED",
+      "value": 16.0,
+      "unit": "percent",
+      "claim": "Share of under-18s at risk of monetary poverty in EU-SILC 2025",
+      "source": "https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Lebensbedingungen-Armutsgefaehrdung/Tabellen/armutsgef-sozdem-zvgl.html",
+      "source_owner": "Destatis",
+      "valid_for": "EU-SILC survey year 2025"
+    },
+    {
+      "id": "de-child-arope-2025",
+      "status": "VERIFIED",
+      "value": 23.5,
+      "unit": "percent",
+      "claim": "Share of under-18s at risk of poverty or social exclusion in EU-SILC 2025",
+      "source": "https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Lebensbedingungen-Armutsgefaehrdung/Tabellen/arope-geschl-alter.html",
+      "source_owner": "Destatis",
+      "valid_for": "EU-SILC survey year 2025"
+    },
+    {
+      "id": "de-child-poverty-gap-2025",
+      "status": "VERIFIED",
+      "value": 19.2,
+      "unit": "percent of poverty threshold",
+      "claim": "Median relative poverty-risk gap for under-18s",
+      "source": "https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Lebensbedingungen-Armutsgefaehrdung/Tabellen/armutsluecke-zvgl.html",
+      "source_owner": "Destatis",
+      "valid_for": "EU-SILC survey year 2025"
+    },
+    {
+      "id": "de-poverty-threshold-single-2025",
+      "status": "VERIFIED",
+      "value": 1446,
+      "unit": "EUR per month",
+      "claim": "60% median-equivalised-income poverty-risk threshold for one person",
+      "source": "https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/02/PD26_039_63.html",
+      "source_owner": "Destatis",
+      "valid_for": "EU-SILC survey year 2025"
+    },
+    {
+      "id": "de-minors-population-2025",
+      "status": "VERIFIED",
+      "value": 13875964,
+      "unit": "persons",
+      "claim": "Population under 18 in Germany",
+      "source": "https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Bevoelkerungsstand/Tabellen/liste-altersgruppen-basis-2022.html",
+      "source_owner": "Destatis",
+      "valid_for": "2025"
+    },
+    {
+      "id": "de-single-parent-poverty-2025",
+      "status": "VERIFIED",
+      "value": 28.9,
+      "unit": "percent",
+      "claim": "At-risk-of-poverty rate for people in single-parent households",
+      "source": "https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Lebensbedingungen-Armutsgefaehrdung/Tabellen/armutsgef-typ-2-zvgl.html",
+      "source_owner": "Destatis",
+      "valid_for": "EU-SILC survey year 2025"
+    },
+    {
+      "id": "de-kindergeld-2026",
+      "status": "VERIFIED",
+      "value": 259,
+      "unit": "EUR per child per month",
+      "claim": "Current Kindergeld amount",
+      "source": "https://familienportal.de/bmbfsfj/themen/familie/familienleistungen/kindergeld/kindergeld-73892",
+      "source_owner": "BMBFSFJ",
+      "valid_from": "2026-01-01"
+    },
+    {
+      "id": "de-kiz-max-2026",
+      "status": "VERIFIED",
+      "value": 297,
+      "unit": "EUR per child per month maximum",
+      "claim": "Maximum Kinderzuschlag",
+      "source": "https://familienportal.de/familienportal/familienleistungen/kinderzuschlag/was-ist-kinderzuschlag--124590",
+      "source_owner": "BMBFSFJ",
+      "valid_for": "current 2026 portal information"
+    },
+    {
+      "id": "de-sgb2-child-rates-2026",
+      "status": "VERIFIED",
+      "value": {"0-5": 357, "6-13": 390, "14-17": 471},
+      "unit": "EUR per month",
+      "claim": "2026 child standard needs in basic income support for jobseekers",
+      "source": "https://www.bmas.de/DE/Arbeit/Grundsicherung-fuer-Arbeitsuchende/Leistungen-und-Bedarfe-in-der-Grundsicherung-fuer-Arbeitsuchende/leistungen-und-bedarfe-in-der-grundsicherung-fuer-arbeitsuchende.html",
+      "source_owner": "BMAS",
+      "valid_for": "2026"
+    },
+    {
+      "id": "diw-wealth-reference-2021",
+      "status": "VERIFIED_STUDY_SCENARIO",
+      "value": {"low": 13, "high": 20},
+      "unit": "EUR billion per year equivalent",
+      "claim": "DIW long-run modelling range for high-wealth taxation / levy designs; conservative configuration with EUR2m personal and EUR5m business allowance is about EUR13bn/year equivalent",
+      "source": "https://www.diw.de/de/diw_01.c.831678.de/publikationen/wochenberichte/2021_50_1/grunderbe_und_vermoegensteuern_koennen_die_vermoegensungleichheit_verringern.html",
+      "source_owner": "DIW Berlin",
+      "warning": "Historical simulation, not a 2026 revenue forecast. Behavioural responses and current asset values require a new microsimulation."
+    },
+    {
+      "id": "diw-inheritance-balanced-2026",
+      "status": "VERIFIED_STUDY_SCENARIO",
+      "value": 2.3,
+      "unit": "EUR billion per year additional",
+      "claim": "DIW inheritance-tax reform with lifetime allowances and simplified progressive rates",
+      "source": "https://www.diw.de/de/diw_01.c.996032.de/publikationen/wochenberichte/2026_04_1/erbschaftsteuerreform__verguenstigungen_abbauen__freibetraege_erhoehen__steuertarifstufen_reduzieren.html",
+      "source_owner": "DIW Berlin",
+      "valid_for": "2026-modelled"
+    },
+    {
+      "id": "diw-inheritance-privilege-removal-2026",
+      "status": "VERIFIED_STUDY_SCENARIO",
+      "value": 7.8,
+      "unit": "EUR billion per year additional",
+      "claim": "DIW estimate for removing business-transfer tax privileges with deferral/annuitisation",
+      "source": "https://www.diw.de/de/diw_01.c.996032.de/publikationen/wochenberichte/2026_04_1/erbschaftsteuerreform__verguenstigungen_abbauen__freibetraege_erhoehen__steuertarifstufen_reduzieren.html",
+      "source_owner": "DIW Berlin",
+      "valid_for": "long-run 2026-modelled",
+      "warning": "Alternative to the balanced DIW scenario above; do not add both."
+    },
+    {
+      "id": "zero-target",
+      "status": "POLICY_TARGET",
+      "value": 0,
+      "unit": "children with an unresolved guaranteed income gap",
+      "claim": "ZERO national objective",
+      "deadline": "within 365 days of parliamentary mandate"
+    },
+    {
+      "id": "zero-buffer",
+      "status": "MODEL_ASSUMPTION",
+      "value": 65,
+      "unit": "percent of median equivalised income",
+      "claim": "Default ZERO guarantee floor, deliberately above the official 60% poverty-risk line"
+    }
+  ]
+}
