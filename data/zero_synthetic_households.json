@@ -1,0 +1,14 @@
+{
+  "status": "SYNTHETIC",
+  "warning": "These are demonstration inputs, not claims about real households or verified current-law disposable income.",
+  "households": [
+    {"id":"single_parent_2_children_low","city":"Berlin","adults":1,"child_ages":[5,10],"disposable_income_monthly_eur":1900,"housing_cost_monthly_eur":1100},
+    {"id":"single_parent_1_child_low","city":"Bremen","adults":1,"child_ages":[7],"disposable_income_monthly_eur":1750,"housing_cost_monthly_eur":850},
+    {"id":"couple_2_small_children_low","city":"Gelsenkirchen","adults":2,"child_ages":[4,11],"disposable_income_monthly_eur":2600,"housing_cost_monthly_eur":900},
+    {"id":"couple_3_children_low","city":"Berlin","adults":2,"child_ages":[3,8,15],"disposable_income_monthly_eur":3200,"housing_cost_monthly_eur":1450},
+    {"id":"single_parent_teen_near_floor","city":"Hamburg","adults":1,"child_ages":[16],"disposable_income_monthly_eur":2300,"housing_cost_monthly_eur":1050},
+    {"id":"couple_1_child_near_floor","city":"Leipzig","adults":2,"child_ages":[6],"disposable_income_monthly_eur":2900,"housing_cost_monthly_eur":850},
+    {"id":"couple_2_children_above_floor","city":"Munich","adults":2,"child_ages":[6,9],"disposable_income_monthly_eur":4500,"housing_cost_monthly_eur":1900},
+    {"id":"single_parent_2_children_above_floor","city":"Cologne","adults":1,"child_ages":[8,12],"disposable_income_monthly_eur":3200,"housing_cost_monthly_eur":1200}
+  ]
+}
