@@ -1,106 +1,132 @@
 # CARE / Germany Abundance Mission — Build Roadmap
 
-## Mission invariant
+## Mission invariants
 
 **Promise != delivery. Verified receipt = delivery.**
 
-## 0–72 hours
+**Likely money != guaranteed pay.**
 
-- Household rule engine for the canonical Berlin single-parent case.
-- Evidence schema: claim → value → unit → valid-from/to → source → confidence → supersedes.
-- Growth-scenario engine.
-- Germany–Vietnam opportunity schema.
-- Public static demo.
+## Highest priority — OpenWork 100 Berlin
 
-**Ship:** public V0.1 demo with one fully verified household calculation.
+`Need → Fund → Qualify → Contract → Work → Verify → Pay → Employ`
 
-## Week 1–2
+### V0 / now
 
-- Implement 20–30 high-value German benefits and transfers.
-- Add deterministic calculation traces and regression tests.
-- Add synthetic application → decision → payment → reconciliation loop.
-- Build evidence updater and stale-source warnings.
-- Model the `More Work → Always More Net` curve across common household types.
+- interactive OpenWork worker/funder prototype;
+- deterministic RED/YELLOW/GREEN guarantee engine;
+- funding registry for §16e, §16i, Berlin complement, ESF+, social enterprises, foundations, procurement and private buyers;
+- Skill Passport for non-regulated work;
+- regulated-work credential boundary;
+- job-transition gate after 120 paid hours or 12 recurring weeks;
+- 200 synthetic funding stress cases plus specific failure scenarios;
+- stakeholder workflows and Funding Watch agent;
+- CI proof workflow.
 
-**Ship:** usable CARE household calculator.
+**Ship:** V0 in draft PR; no GREEN mission without binding 100% cost coverage and payroll liquidity.
 
-## Week 3–6
+### Week 1 — three real needs
 
-- Party/policy proposal ingestion.
-- Household-impact simulator: `TODAY` vs policy A/B/C.
-- Funding proof: gross cost, behavioural assumptions, funding source, uncertainty.
-- Time guarantee: how long the proposal applies and what legal act would be required.
-- Unsupported claims fail closed.
+Choose three mission families, initially:
 
-**Ship:** Policy Proof / Before You Vote view.
+1. digital support for older Berliners;
+2. accessibility/city-data mapping;
+3. admin/digitisation support for public-interest organisations.
 
-## Month 2–3
+For each:
 
-Build the national growth lever model:
+- interview 3–5 organisations with real unmet work;
+- quantify units, hours, quality and recurring demand;
+- validate legal task boundaries;
+- build 10–45 minute training/check;
+- get real payroll cost at €20/hour from employer/payroll partner;
+- map at least three funding routes;
+- record exact evidence needed to become BINDING.
 
-- AI and automation;
-- administrative burden / once-only government;
-- labour participation and work incentives;
-- childcare;
-- skills, education and immigration;
-- infrastructure;
-- energy;
-- housing and construction;
-- capital formation and entrepreneurship;
-- R&D and diffusion;
-- trade and international growth corridors.
+**Ship:** three real YELLOW mission cards with named need owners and exact funding gaps. No fake GREEN.
 
-Also build:
+### Week 2 — guarantee infrastructure
 
-- public-investment ROI ledger;
-- confidence/uncertainty ranges;
-- non-additivity safeguards so overlapping growth estimates cannot simply be summed;
-- Germany–Vietnam Growth Corridor MVP.
+- secure employer/payroll partner;
+- calculate exact fully loaded costs and applicable tariff rules;
+- secure a small payroll reserve / bridge-liquidity commitment;
+- create mission buyer/funder commitment templates;
+- add double-funding review checklist;
+- review worker contract/privacy/employment model with specialists.
 
-**Ship:** government/politician pitch backed by reproducible calculations.
+**Ship:** infrastructure capable of making one mission GREEN.
 
-## Month 3–6
+### Week 3–4 — first GREEN mission
 
-- Recruit one benefits-advice organisation, NGO or municipality for a real CARE pilot.
-- Recruit 10–20 German and Vietnamese firms for corridor matching.
-- Track entitlement found, € delivered, processing time, administrative effort and error rate.
-- Track trade opportunity value, introductions, pilots, contracts, jobs and investment.
-- Publish a before/after outcome report.
+Require all of:
 
-**Ship:** first real-world outcomes.
+- binding commissioner commitment;
+- applicable subsidy approval if used;
+- €20 premium gap funded where subsidy basis is lower;
+- training/supervision/admin funded;
+- payroll liquidity reserved;
+- qualification ready;
+- measurable output definition ready.
 
-## 6–18 months
+**Ship:** first real `PAY GUARANTEED` Berlin mission.
 
-- Government data/connectors where legally available.
-- Verified identity, consent and once-only data flows.
-- Application routing and machine-readable decision traces.
-- Bank/payment reconciliation.
-- Appeal and correction paths.
-- Production-grade security, privacy and audit model.
-- Institutional dashboard.
+### Month 2 — OpenWork 10
 
-**Ship:** institutional CARE pilot.
+Run ten people through:
 
-## 2–5 years
+`match → skill check → contract → paid work → quality evidence → payroll → skill passport → transition review`
 
-- National CARE interoperability standard.
-- Public-investment outcome ledger.
-- Citizen ownership / prosperity-fund policy prototype.
-- Growth corridors with complementary economies.
-- Public API for researchers, journalists, parties and civil society.
-- National scoreboard for productive capacity and household abundance.
+Measure time-to-contract, qualification completion, first-pass quality, worker/organisation satisfaction, gross pay, on-time payroll, hidden funding admin, cost per paid hour and conversion to regular roles.
 
-**Ship:** public infrastructure.
+**Ship:** OpenWork 10 outcome report with receipts and failures.
 
-## Long-term north star
+### Month 3–6 — OpenWork 100 Berlin
 
-A state should be able to answer, continuously and audibly:
+- 100 people into fair paid employment/missions;
+- €20/hour gross floor or higher applicable tariff;
+- every mission GREEN before start;
+- multiple mission families and funding stacks;
+- recurring work automatically hits job-transition review;
+- publish funding → payroll → outcome receipts;
+- recruit municipalities, social organisations, foundations and companies as repeat buyers.
 
-1. What is each person entitled to?
-2. What has actually reached them?
-3. What is missing, delayed or wrongly denied?
-4. What does each major policy proposal change for them?
-5. How is the proposal funded?
-6. Is the country becoming more productive?
-7. Who owns the additional prosperity?
-8. Did ordinary households become materially more abundant?
+**Ship:** OpenWork 100 evidence report + Berlin institutional pilot proposal.
+
+### 6–18 months
+
+- standard workflows with willing Jobcenters/funders;
+- employer/payroll network;
+- OpenWork Pay Guarantee Fund or regulated finance partner;
+- identity/work-authorisation flow;
+- qualification marketplace with regulated boundaries;
+- funder outcome dashboard;
+- automated funding deadline/staleness monitoring;
+- production security, privacy, audit and appeals.
+
+### 2–5 years
+
+- national mission/funding interoperability standard;
+- portable evidence-based Skill Passport;
+- public/private mission marketplace where only funded work is startable;
+- national pay-guarantee infrastructure;
+- policy pathway toward practical employment guarantee: anyone able and willing to contribute can access useful, fairly paid work.
+
+## Other CARE tracks
+
+Continue after the first GREEN mission:
+
+- current-law household engine and 20–30 high-value entitlements;
+- Policy Proof TODAY vs proposals;
+- national productivity/abundance model;
+- Germany–Vietnam growth corridor;
+- public-investment outcome ledger.
+
+## Long-term questions
+
+1. What useful work is not being done?
+2. What is it worth?
+3. Which funding can legally and reliably pay for it?
+4. Is the wage guaranteed before start?
+5. Can a willing person learn the task quickly and safely?
+6. Did the work get done and payroll land on time?
+7. Did recurring work become a regular job?
+8. Is the country becoming more productive and households more abundant?
