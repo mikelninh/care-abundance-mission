@@ -69,5 +69,5 @@ jobs:
       - name: Assert food-access guarantees
         run: |
           grep -q '7 Tage geschützt' food/index.html
-          grep -q 'Same-Day Backstop' docs/FOOD_GUARANTEE.md
+          grep -q 'Same-Day Food Backstop' docs/FOOD_GUARANTEE.md
           grep -q 'Cash bleibt' food/index.html
