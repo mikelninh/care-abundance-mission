@@ -38,6 +38,8 @@ Together:
 - income-shock E2E simulator;
 - source ledger separating current law from policy proposals.
 
+Local proof currently observed: **12/12 Family Guarantee + fiscal tests pass and the Family E2E simulator passes.** Hosted CI is not called green until GitHub reports an actual successful run.
+
 ### OpenWork
 
 - RED/YELLOW/GREEN funding engine;
