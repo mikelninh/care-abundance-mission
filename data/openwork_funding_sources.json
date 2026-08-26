@@ -1,0 +1,22 @@
+{
+  "last_verified": "2026-08-26",
+  "rules": {
+    "green_requires_binding_coverage_pct": 100,
+    "green_requires_payroll_liquidity": true,
+    "openwork_fair_floor_eur_per_hour": 20,
+    "higher_applicable_tariff_wins": true,
+    "submitted_application_counts_as_binding": false
+  },
+  "sources": [
+    {"id":"sgb2-16i","name":"§16i SGB II — Teilhabe am Arbeitsmarkt","type":"wage_subsidy","coverage":"100% years 1–2, then 90/80/70% years 3–5 of eligible subsidy basis","binding_only_after":"Jobcenter approval","important_limit":"For non-tariff cases, BA states statutory minimum wage is used as subsidy calculation basis.","training":"Up to €3,000 required further-training costs, including in-company further training.","source":"https://www.arbeitsagentur.de/unternehmen/finanziell/foerderung-von-langzeitleistungsbeziehenden"},
+    {"id":"sgb2-16e","name":"§16e SGB II","type":"wage_subsidy","coverage":"75% year 1, 50% year 2 for eligible cases","binding_only_after":"Jobcenter approval","source":"https://www.arbeitsagentur.de/unternehmen/finanziell/foerderung-von-langzeitleistungsbeziehenden"},
+    {"id":"berlin-16i-complement","name":"Berlin complementary §16i funding","type":"cofunding","coverage":"Berlin states qualifying common-good employers can receive top-up to 100% from year 3 plus expense allowance, subject to available budget.","source":"https://www.berlin.de/sen/arbeit/beschaeftigung/foerderung/teilhabe-am-arbeitsmarkt/"},
+    {"id":"berlin-social-enterprises","name":"Soziale Betriebe Berlin","type":"employment_program","coverage":"Professional guidance/social support and wage-funding combinations for eligible projects.","source":"https://www.berlin.de/sen/arbeit/beschaeftigung/foerderung/soziale-betriebe-2-0/"},
+    {"id":"esf-plus-berlin","name":"ESF+ Berlin 2021–2027","type":"project_funding","coverage":"Employment/skills, education and social inclusion instruments; exact stacking rules must be checked.","source":"https://www.berlin.de/sen/wirtschaft/gruenden-und-foerdern/europaeische-strukturfonds/esf-foerderperiode-2021-2027/"},
+    {"id":"mag","name":"Maßnahme bei einem Arbeitgeber (MAG)","type":"preemployment_trial","coverage":"Practical trial subject to prior approval; not employment and not employer-paid wages. Never represent as paid productive employment.","source":"https://www.arbeitsagentur.de/arbeitslos-arbeit-finden/massnahme-beim-arbeitgeber-beantragen"},
+    {"id":"lotto-berlin","name":"LOTTO-Stiftung Berlin","type":"foundation_project_funding","coverage":"Project-specific grants; current Silbernetz example is €325,000.","source":"https://www.lotto-stiftung-berlin.de/projekte/infotelefon-von-silbernetz-schlie%C3%9Ft-l%C3%BCcken-zur-digitalen-welt/"},
+    {"id":"aktion-mensch","name":"Aktion Mensch inclusion-enterprise funding","type":"foundation_project_funding","coverage":"Current offer: up to €300,000 and up to 90% eligible costs for eligible organisations/target groups.","source":"https://www.aktion-mensch.de/foerderung/foerderangebote/anschubfoerderung-arbeit"},
+    {"id":"public-procurement","name":"Public mission buyer","type":"earned_revenue","coverage":"Signed purchase order/service contract for measurable outcome.","source":"binding buyer contract"},
+    {"id":"private-buyer","name":"Company / philanthropic mission buyer","type":"earned_or_donated_revenue","coverage":"Signed commitment can close wage-premium, supervision or other eligible gaps.","source":"signed contract/reserved funds"}
+  ]
+}
