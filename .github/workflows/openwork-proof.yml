@@ -1,19 +1,23 @@
-name: OpenWork proof
+name: CARE OpenWork + Family Guarantee proof
 
 on:
   pull_request:
     paths:
       - 'openwork/**'
+      - 'family/**'
       - 'engine/openwork_engine.py'
+      - 'engine/family_guarantee.py'
       - 'tests/test_openwork.py'
+      - 'tests/test_family_guarantee.py'
       - 'data/openwork_funding_sources.json'
       - 'docs/OPENWORK*'
+      - 'docs/FAMILY_GUARANTEE*'
       - 'agents/openwork_funding_watch.md'
       - '.github/workflows/openwork-proof.yml'
   workflow_dispatch:
 
 concurrency:
-  group: openwork-${{ github.event.pull_request.number || github.ref }}
+  group: care-guarantees-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,12 +29,23 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install pytest
-      - run: python -m compileall -q engine/openwork_engine.py openwork/simulate.py
-      - run: python -m pytest -q tests/test_openwork.py
-      - run: python openwork/simulate.py
+      - name: Compile deterministic engines
+        run: python -m compileall -q engine/openwork_engine.py engine/family_guarantee.py openwork/simulate.py
+      - name: Run OpenWork guarantee tests
+        run: python -m pytest -q tests/test_openwork.py
+      - name: Run Family Guarantee tests
+        run: python -m pytest -q tests/test_family_guarantee.py
+      - name: Run OpenWork end-to-end simulator
+        run: python openwork/simulate.py
       - run: python -m json.tool data/openwork_funding_sources.json >/dev/null
       - name: Assert worker-facing guarantees
         run: |
           grep -q 'PAY GUARANTEED' openwork/index.html
           grep -q '€20–24/h' openwork/index.html
           grep -q 'Payroll liquidity' openwork/index.html
+      - name: Assert family-facing guarantees
+        run: |
+          grep -q 'Kein Kind' family/index.html
+          grep -q '€259' family/index.html
+          grep -q '35%+' family/index.html
+          grep -q 'policy prototype' family/index.html
