@@ -6,79 +6,58 @@
 
 **Likely money != guaranteed pay.**
 
-**A known eligible child must not remain below the protected family floor because the family failed to navigate bureaucracy.**
+**Existing organisations' impact != CARE impact.**
 
-# Highest priority — two guarantees
+# Now — CARE Berlin #001
 
-## A. Family Guarantee
+Before building more national architecture, convert the project into one verified real-world action.
 
-`Child known → Household resolved → Floor → Gap → Auto pay → Receipt → Correct`
+### 24-hour activation
 
-## B. OpenWork
+- publish/share the CARE Club Berlin action router;
+- one real help action through an existing trusted provider;
+- activate five people: money / time / food / skill / introduction;
+- request one frontline conversation;
+- document one unmet system gap anonymously;
+- choose the smallest pilot that can close that exact gap.
+
+**Ship:** Issue #3 with receipts/checklist. No child/family data in public GitHub.
+
+### First direct CARE pilot
+
+Target: **10 Berlin households · 30 days · 0 unresolved food-access days caused by money/admin failure.**
+
+Do not recruit until:
+
+- frontline partner confirms pilot flow;
+- maximum liability + contingency is ring-fenced;
+- same-day + weekend/holiday food routes exist;
+- privacy/consent/incident flow is reviewed;
+- delivery receipts and correction workflow are ready.
+
+---
+
+## Guarantee 1 — OpenWork 100 Berlin
 
 `Need → Fund → Qualify → Contract → Work → Verify → Pay → Employ`
 
-Together:
+### V0 / now
 
-`Family safe → Useful work → More income → Skills → Regular job → Guarantee tapers smoothly`
+- interactive OpenWork worker/funder prototype;
+- deterministic RED/YELLOW/GREEN guarantee engine;
+- funding registry for §16e, §16i, Berlin complement, ESF+, social enterprises, foundations, procurement and private buyers;
+- Skill Passport for non-regulated work;
+- regulated-work credential boundary;
+- job-transition gate after 120 paid hours or 12 recurring weeks;
+- synthetic funding stress cases plus specific failure scenarios;
+- stakeholder workflows and Funding Watch agent;
+- CI proof workflow.
 
----
+**Ship:** no GREEN mission without binding 100% cost coverage and payroll liquidity.
 
-# 0–72 hours — deterministic proof
+### Three real needs
 
-### Family Guarantee
-
-- dual floor: max(2026 legal/housing minimum, latest official poverty threshold);
-- protected €259 child base in strong CARE mode;
-- 35% V0 work keep rate;
-- no-clawback-below-floor rule;
-- household UI;
-- fiscal microsimulation scaffold;
-- synthetic household tests;
-- income-shock E2E simulator;
-- source ledger separating current law from policy proposals.
-
-Local proof currently observed: **12/12 Family Guarantee + fiscal tests pass and the Family E2E simulator passes.** Hosted CI is not called green until GitHub reports an actual successful run.
-
-### OpenWork
-
-- RED/YELLOW/GREEN funding engine;
-- binding coverage + payroll liquidity invariant;
-- €20+/hour product floor;
-- Skill Passport;
-- job-transition gate;
-- funding registry and Funding Watch;
-- worker/funder UI and E2E simulation.
-
-**Ship:** one draft PR containing both guarantee layers. No claim of live public entitlement, live payroll or national fiscal affordability.
-
----
-
-# Week 1 — Family Guarantee shadow pilot package
-
-Choose one partner category: benefits-advice organisation, family centre, municipality or research/public-interest partner.
-
-Prepare:
-
-1. data-minimised household intake;
-2. `CURRENT LAW` calculation trace;
-3. `CARE GUARANTEE` calculation trace;
-4. automated comparison receipt;
-5. missed-entitlement detection;
-6. poverty-gap measurement;
-7. work-incentive curve;
-8. correction/appeal UX;
-9. privacy/legal review plan.
-
-Use 50–100 synthetic cases first, then only consented/authorised real cases.
-
-**Ship:** shadow pilot that moves no money but can show exactly where current delivery leaves gaps or bureaucracy.
-
----
-
-# Week 1 — three real OpenWork needs
-
-Initial mission families:
+Start with:
 
 1. digital support for older Berliners;
 2. accessibility/city-data mapping;
@@ -86,209 +65,169 @@ Initial mission families:
 
 For each:
 
-- real need owner;
-- units/hours/quality definition;
-- legal task boundary;
-- 10–45 minute training/check where appropriate;
-- exact employer/payroll cost at €20+/hour;
-- at least three candidate funding routes;
-- evidence required to make funding BINDING.
+- interview 3–5 organisations with real unmet work;
+- quantify units, hours, quality and recurring demand;
+- validate legal task boundaries;
+- build 10–45 minute training/check;
+- get real payroll cost at €20/hour from employer/payroll partner;
+- map at least three funding routes;
+- record exact evidence needed to become BINDING.
 
-**Ship:** three real YELLOW missions, not fake GREEN jobs.
+**Ship:** three real YELLOW mission cards with named need owners and exact funding gaps. No fake GREEN.
 
----
+### Guarantee infrastructure
 
-# Week 2 — guarantee infrastructure
+- secure employer/payroll partner;
+- calculate exact fully loaded costs and applicable tariff rules;
+- secure a small payroll reserve / bridge-liquidity commitment;
+- create mission buyer/funder commitment templates;
+- add double-funding review checklist;
+- review worker contract/privacy/employment model with specialists.
 
-## Family Guarantee pilot funding
+**Ship:** infrastructure capable of making one mission GREEN.
 
-Before enrolling anyone into a cash top-up pilot:
+### First GREEN mission
 
-- define cohort and pilot duration;
-- stress maximum liability under job-loss/income-shock cases;
-- ring-fence full pilot liability + contingency;
-- identify legally suitable paying entity;
-- establish bank/payment reconciliation;
-- establish no-enrolment rule when reserve would be breached.
-
-A pilot family must not depend on hoped-for donations after enrolment.
-
-## OpenWork payroll guarantee
-
-- employer/payroll partner;
-- exact fully loaded employment cost;
-- payroll reserve / bridge liquidity;
-- commissioner/funder commitment templates;
-- double-funding review;
-- worker contract/privacy/employment review.
-
-**Ship:** infrastructure able to make one family pilot cohort cash-safe and one OpenWork mission genuinely GREEN.
-
----
-
-# Week 3–4 — first real transactions
-
-## Family Guarantee top-up pilot
-
-Existing statutory benefits continue through official channels. The pilot pays only the verified incremental CARE gap.
-
-Require:
-
-- signed participant/pilot terms;
-- verified household inputs;
-- ring-fenced cash;
-- deterministic calculation;
-- payment receipt;
-- incident/retry path;
-- correction path;
-- measurement of poverty gap before/after.
-
-**Ship:** first real CARE top-up with payment receipt — without pretending federal law has changed.
-
-## OpenWork first GREEN mission
-
-Require:
+Require all of:
 
 - binding commissioner commitment;
-- subsidy approval if used;
-- €20 premium gap funded where necessary;
+- applicable subsidy approval if used;
+- €20 premium gap funded where subsidy basis is lower;
 - training/supervision/admin funded;
 - payroll liquidity reserved;
 - qualification ready;
-- measurable output ready.
+- measurable output definition ready.
 
 **Ship:** first real `PAY GUARANTEED` Berlin mission.
 
----
+### OpenWork 10 → 100
 
-# Month 2 — closed-loop pilot
+Run people through:
 
-Run households/workers through both systems where suitable:
+`match → skill check → contract → paid work → quality evidence → payroll → skill passport → transition review`
 
-`family floor → work match → skill check → contract → paid work → more net income → top-up taper → quality evidence → payroll → transition review`
-
-Measure:
-
-- time from risk detection to calculated protection;
-- time from confirmed underpayment to payment;
-- poverty gap closed;
-- missed current-law entitlements;
-- household admin minutes/documents;
-- earnings-to-disposable-income slope;
-- OpenWork time-to-contract;
-- qualification completion;
-- gross wage / on-time payroll;
-- conversion toward regular jobs;
-- participant and organisation experience.
-
-**Ship:** CARE Guarantees outcome report with receipts and failures.
+Measure time-to-contract, qualification completion, first-pass quality, worker/organisation satisfaction, gross pay, on-time payroll, hidden funding admin, cost per paid hour and conversion to regular roles.
 
 ---
 
-# Month 2–3 — national Family Guarantee microsimulation
+## Guarantee 2 — Family Guarantee
 
-Do not make a national budget claim before this step.
+### Shadow pilot
 
-Acquire/use an appropriate representative household microdata source and model:
+- current-law vs CARE calculation for real anonymised/synthetic household archetypes;
+- measure missed entitlements, poverty gap and admin burden;
+- no money movement in first shadow phase;
+- partner with benefits/family/municipal frontline actor.
 
-`current law disposable income`
-`→ existing public support by programme`
-`→ CARE protected target`
-`→ incremental top-up`
-`→ household weights`
-`→ national gross incremental cost`
+### Ring-fenced top-up pilot
 
-Report separately:
+- define cohort;
+- calculate worst-case liability;
+- fund liability + contingency before enrolment;
+- deterministic entitlement trace;
+- payout receipt + correction flow;
+- no good-faith clawback below protected target.
 
-- incremental cash cost;
-- distribution by income/household type;
-- number of children lifted above floor;
-- effects of 20/35/50% work keep rates;
-- effects of protecting/not protecting Kindergeld;
-- administrative savings (not netted into primary cost);
-- behavioural scenarios with uncertainty.
+### National proof
 
-**Ship:** reproducible fiscal and distributional model suitable for expert challenge.
-
----
-
-# Month 3–6 — OpenWork 100 + Family Guarantee cohort
-
-### OpenWork 100
-
-- 100 people into fairly paid work/missions;
-- €20/hour gross product floor or higher tariff;
-- every mission GREEN before start;
-- recurring work reaches transition review.
-
-### Family Guarantee
-
-- expanded consented shadow cohort;
-- top-up pilot only within fully reserved liability;
-- payment/correction reliability tracked;
-- publish poverty gaps and take-up failures found.
-
-### Combined
-
-Test whether households can increase paid work without a benefits cliff.
-
-**Ship:** Berlin institutional pilot proposal with independent review of law, privacy, finance and labour design.
+- representative household microsimulation;
+- gross incremental cost;
+- current programme substitution shown separately;
+- admin savings shown separately;
+- work-incentive scenarios;
+- legal/institutional implementation map.
 
 ---
 
-# 6–18 months — institutional integration
+## Guarantee 3 — Food Guarantee
 
-## Family Guarantee
+### Berlin 7-day coverage pilot
 
-- align with emerging unified social-benefit system;
-- once-only/register architecture;
-- automatic Kindergeld integration;
-- deterministic entitlement API;
-- payment/reconciliation service;
-- human exception/appeal service;
-- privacy/security/audit model;
-- statutory drafting for automatic top-up duty, protected target and work taper.
+For children, GREEN requires:
 
-## OpenWork
+- school/Kita daytime route where applicable;
+- evenings;
+- weekends;
+- holidays;
+- same-day emergency route;
+- delivery/accessibility fallback;
+- necessary diet/allergy support;
+- cash Family Guarantee not reduced.
 
-- standard workflows with Jobcenters/funders;
+### Same-day backstop
+
+Test the operational promise:
+
+> A financial/admin failure today does not become an uncovered food day.
+
+Measure request-to-access time, unresolved requests, route failures, weekend/holiday gaps and delivery accessibility.
+
+---
+
+## CARE Club Berlin product path
+
+### V0 — Action Router
+
+- `Ich brauche Hilfe`;
+- `Ich kann helfen`;
+- `Ich will mitbauen`;
+- verified external routes;
+- no sensitive intake;
+- CARE impact explicitly starts at zero.
+
+### V0.2 — Berlin Action Watch
+
+- route/link/opening/capacity freshness;
+- funding/opportunity scan;
+- system-level gap detection;
+- human review for critical route changes.
+
+### V0.3 — Partner Console
+
+- anonymous aggregate demand;
+- available capacity;
+- open funding gaps;
+- route health;
+- action queue.
+
+### V1 — Verified delivery ledger
+
+`NEED_IDENTIFIED → ROUTED → COMMITTED → DELIVERED → VERIFIED`
+
+Only VERIFIED outcomes increment public CARE impact.
+
+---
+
+## 6–18 months
+
+- standard workflows with willing Jobcenters/funders;
 - employer/payroll network;
-- regulated Pay Guarantee Fund/finance partner;
-- identity/work-authorisation;
-- portable Skill Passport;
-- production funding registry and deadline monitoring.
+- OpenWork Pay Guarantee Fund or regulated finance partner;
+- identity/work-authorisation flow;
+- qualification marketplace with regulated boundaries;
+- Family/Food statutory-pilot pathway;
+- production security, privacy, audit and appeals;
+- automated route/programme freshness monitoring.
 
----
+## 2–5 years
 
-# 2–5 years — national guarantees
+- national mission/funding interoperability standard;
+- portable evidence-based Skill Passport;
+- public/private mission marketplace where only funded work is startable;
+- national pay-guarantee infrastructure;
+- simplified automatic family-floor infrastructure;
+- enforceable food-access backstop;
+- policy pathway toward practical employment guarantee.
 
-1. **Family Guarantee in law:** eligible family protection is an individual statutory entitlement, not a capped discretionary grant.
-2. Unified social-benefit calculation/payment layer.
-3. National OpenWork mission/funding interoperability standard.
-4. Portable evidence-based Skill Passport.
-5. Practical pathway toward a fair-work guarantee for able/willing people.
-6. Public outcome ledger: poverty gap, payment reliability, work progression, fiscal cost and household abundance.
+## Long-term questions
 
----
-
-# Long-term scoreboard
-
-The state should be able to answer continuously:
-
-1. How many children are projected below the protected floor?
-2. How many remain below it after the state has the information required to act?
-3. How much money is missing and why?
-4. Did the payment land on time?
-5. Did any recovery or administrative change push a good-faith family below the floor?
-6. Does every additional euro earned raise household disposable income?
-7. What useful work is not being done?
-8. Is funding/payroll guaranteed before a worker starts?
+1. Is anyone without food today because money/admin failed?
+2. Is any known eligible child below the protected family floor?
+3. What useful work is not being done?
+4. What is it worth?
+5. Which funding can legally and reliably pay for it?
+6. Is the wage guaranteed before start?
+7. Can a willing person learn the task quickly and safely?
+8. Did the work get done and payroll land on time?
 9. Did recurring work become a regular job?
-10. What is the gross public cost, separately from speculative future savings?
-11. Are ordinary households becoming materially more secure and abundant?
-
-Targets:
-
-- **children left below the protected floor after verified eligibility: 0**;
-- **GREEN OpenWork missions with unfunded payroll: 0**;
-- **income cliffs created by the guarantee formula: 0**.
+10. Can a person who wants to help take a useful action in two clicks?
