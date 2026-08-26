@@ -1,0 +1,36 @@
+name: OpenWork proof
+
+on:
+  pull_request:
+    paths:
+      - 'openwork/**'
+      - 'engine/openwork_engine.py'
+      - 'tests/test_openwork.py'
+      - 'data/openwork_funding_sources.json'
+      - 'docs/OPENWORK*'
+      - 'agents/openwork_funding_watch.md'
+      - '.github/workflows/openwork-proof.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: openwork-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pytest
+      - run: python -m compileall -q engine/openwork_engine.py openwork/simulate.py
+      - run: python -m pytest -q tests/test_openwork.py
+      - run: python openwork/simulate.py
+      - run: python -m json.tool data/openwork_funding_sources.json >/dev/null
+      - name: Assert worker-facing guarantees
+        run: |
+          grep -q 'PAY GUARANTEED' openwork/index.html
+          grep -q '€20–24/h' openwork/index.html
+          grep -q 'Payroll liquidity' openwork/index.html
