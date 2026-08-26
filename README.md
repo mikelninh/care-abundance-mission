@@ -2,85 +2,78 @@
 
 **Produce more. Make essentials abundant. Give people ownership. Prove that value reached them.**
 
-CARE — **Civic Accountability & Resource Entitlement** — is a public-interest prototype for an abundance-oriented state: grow productive capacity, make public promises executable, and verify that money and resources actually reach people.
-
 > **Promise != delivery. Verified receipt = delivery.**
 
-## What this repository contains
+## Highest priority: OpenWork
 
-- **CARE household engine** — deterministic, source-backed entitlement calculations.
-- **Germany Abundance Mission** — evidence-led growth levers and transparent scenario maths.
-- **Policy Proof** — planned household-level comparison of political proposals: who gets what, for how long, at what fiscal cost, with what funding proof.
-- **Germany–Vietnam Growth Corridor** — a first international growth corridor matching complementary capabilities, trade, investment and talent.
-- **Evidence ledger** — separates `VERIFIED`, `MODELLED`, and `PENDING` claims.
-- **Mission agents** — specifications for evidence monitoring, opportunity discovery and mission control.
+> **Work is funded → you can start.**
 
-## V0 status
+OpenWork is the work/income layer of CARE. It turns unmet public and social needs into **fully funded, fairly paid employment**:
 
-V0 already includes:
+`Need → Fund → Qualify → Contract → Work → Verify → Pay → Employ`
 
-- official 2025 German GDP/population baselines;
-- an interactive 1–5 year real-growth scenario calculator;
-- an illustrative citizen growth-dividend scenario;
-- evidence-backed high-leverage reform areas;
-- a canonical Berlin household test case;
-- a fail-closed entitlement engine skeleton;
-- starter agent specifications;
-- a roadmap from prototype to institutional pilot.
+### Hard rules
 
-### What V0 deliberately refuses to fake
+- no GREEN/startable mission until 100% of fully loaded employment cost has **binding funding and payroll liquidity**;
+- **€20 gross/hour OpenWork Fair Floor or higher applicable tariff** — a product standard, not a current universal legal entitlement;
+- `Learn → Check → Prove → Unlock → Paid Work` for non-regulated tasks;
+- regulated work still requires the legally necessary credential;
+- productive sample work is paid;
+- at **120 paid hours or 12 weeks recurring demand**, trigger a job-transition review;
+- grants/subsidies may only be stacked where their rules allow it;
+- submitted applications are never guaranteed money.
 
-The canonical household is:
+### V0 now includes
 
-- single parent;
-- 2 children;
-- Berlin;
-- €2,000 gross monthly income;
-- €1,100 monthly rent.
+- [`openwork/index.html`](openwork/index.html) interactive worker/funding prototype;
+- [`engine/openwork_engine.py`](engine/openwork_engine.py) deterministic funding guarantee engine;
+- [`tests/test_openwork.py`](tests/test_openwork.py) guarantee invariants + 200 synthetic funding stress cases;
+- [`openwork/simulate.py`](openwork/simulate.py) end-to-end failure/success scenarios;
+- [`docs/OPENWORK.md`](docs/OPENWORK.md) operating model;
+- [`docs/OPENWORK_WORKFLOWS.md`](docs/OPENWORK_WORKFLOWS.md) stakeholder workflows;
+- [`docs/OPENWORK_SOURCES.md`](docs/OPENWORK_SOURCES.md) verified programme facts vs product rules;
+- [`data/openwork_funding_sources.json`](data/openwork_funding_sources.json) starter funding registry;
+- [`agents/openwork_funding_watch.md`](agents/openwork_funding_watch.md) funding watch specification;
+- GitHub Actions proof workflow.
 
-The current-law entitlement and party-by-party household outcomes remain **PENDING** until deterministic legal rules, source/version traces and tests are implemented.
+### The V1 promise
 
-No verified rule + source + version = **no public euro claim**.
+> **If a mission is GREEN, the contractual gross wage at or above the OpenWork Fair Floor is fully funded and payroll liquidity is reserved before the person starts.**
 
-## Four connected products
+OpenWork does **not** yet claim a universal legal right to a €20/hour job, a guaranteed net wage, automatic grant stacking, or a live employer/payroll service.
+
+## CARE ecosystem
 
 | Product | Core question |
 |---|---|
+| **OpenWork** | What useful work needs doing, who can do it, and is fair pay guaranteed before start? |
 | **CARE** | What does this person deserve, and did they actually receive it? |
 | **Abundance Engine** | How can Germany produce dramatically more real value? |
-| **Policy Proof** | What does a political proposal mean for this household in euros, duration and funding? |
+| **Policy Proof** | What does a proposal mean for a household in euros, duration and funding? |
 | **Growth Corridors** | Where can Germany create additional wealth through international cooperation? |
 
-The end-to-end chain is:
+Expanded chain:
 
-`Produce → Distribute → Deliver → Verify`
+`Produce → Fund Useful Work → Pay People → Deliver → Verify → Grow`
 
-## Run locally
+## Run
 
-Open `index.html` directly in a browser. The V0 front-end has no build step.
-
-Run the engine tests with:
+Open `openwork/index.html` for the OpenWork prototype.
 
 ```bash
-python -m pytest -q
+python -m pytest -q tests/test_openwork.py
+python openwork/simulate.py
 ```
 
 ## Build order
 
-1. Implement the current-law Berlin household calculation.
-2. Expand to 20–30 high-value German entitlements.
-3. Add deterministic calculation traces and regression tests.
-4. Add application → decision → payment → reconciliation simulation.
-5. Build Policy Proof: TODAY vs proposed policy rules.
-6. Add funding-proof calculations and uncertainty.
-7. Build the Germany–Vietnam Growth Corridor MVP.
-8. Recruit a real benefits-advice/municipal pilot and a trade-corridor pilot.
-9. Replace synthetic adapters with real government/data/payment connectors where legally available.
+1. **OpenWork 100 Berlin:** validate three real mission families and their actual funding stacks.
+2. Secure one employer/payroll partner and one bridge-liquidity mechanism.
+3. Turn one real need into a genuinely GREEN mission before recruiting workers.
+4. Run the first person through skill check → contract → paid work → evidence → payroll.
+5. Scale to 10, then 100 workers; measure pay, quality and conversion into regular jobs.
+6. Continue CARE household/Policy Proof and national abundance work in parallel.
 
-See [`ROADMAP.md`](ROADMAP.md) and [`docs/MISSION.md`](docs/MISSION.md).
-
-## Principle
-
-The goal is not simply a bigger or smaller state. The goal is **greater human possibility, backed by auditable delivery**.
+See [`ROADMAP.md`](ROADMAP.md).
 
 **Bake more cake. Give everyone a stake in the bakery. Show the receipts.**
