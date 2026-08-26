@@ -1,106 +1,129 @@
-# CARE / Germany Abundance Mission — Build Roadmap
+# CARE / ZERO — accelerated national roadmap
 
 ## Mission invariant
 
 **Promise != delivery. Verified receipt = delivery.**
 
-## 0–72 hours
+## New priority
 
-- Household rule engine for the canonical Berlin single-parent case.
-- Evidence schema: claim → value → unit → valid-from/to → source → confidence → supersedes.
-- Growth-scenario engine.
-- Germany–Vietnam opportunity schema.
-- Public static demo.
+The first national mission is now:
 
-**Ship:** public V0.1 demo with one fully verified household calculation.
+> **ZERO Deutschland: 0 children with an unresolved guaranteed-income gap within 365 days of a parliamentary mandate.**
 
-## Week 1–2
+This is an aggressive target, not a prediction of legislative timing.
 
-- Implement 20–30 high-value German benefits and transfers.
-- Add deterministic calculation traces and regression tests.
-- Add synthetic application → decision → payment → reconciliation loop.
-- Build evidence updater and stale-source warnings.
-- Model the `More Work → Always More Net` curve across common household types.
+## Today — V1 proof
 
-**Ship:** usable CARE household calculator.
+Built in `zero-national-guarantee-v1`:
 
-## Week 3–6
+- deterministic ZERO household guarantee engine;
+- modified-OECD / EU-SILC equivalence calculation;
+- 60–70% median-income guarantee parameter, default 65%;
+- exact household top-up calculation;
+- national funding scenario engine with 20% reserve;
+- conservative high-wealth reference scenario;
+- mutually exclusive DIW inheritance-tax scenarios;
+- statutory general-revenue backstop model;
+- evidence ledger separating facts, study scenarios and policy assumptions;
+- synthetic household suite;
+- public `zero.html` simulator;
+- regression tests and GitHub Actions CI;
+- 365-day national implementation masterplan.
 
-- Party/policy proposal ingestion.
-- Household-impact simulator: `TODAY` vs policy A/B/C.
-- Funding proof: gross cost, behavioural assumptions, funding source, uncertainty.
-- Time guarantee: how long the proposal applies and what legal act would be required.
-- Unsupported claims fail closed.
+**Ship:** testable, shareable policy prototype without pretending government integrations already exist.
 
-**Ship:** Policy Proof / Before You Vote view.
+## Days 0–14 after mandate
 
-## Month 2–3
+- ZERO Guarantee Act draft.
+- Freeze household floor, appeal rights and operational KPI.
+- Commission current-year fiscal microsimulation.
+- Publish calculation contract and evidence schema.
+- Map every required Bund/Länder/Kommunen data source and legal basis.
 
-Build the national growth lever model:
+**Ship:** executable national contract.
 
-- AI and automation;
-- administrative burden / once-only government;
-- labour participation and work incentives;
-- childcare;
-- skills, education and immigration;
-- infrastructure;
-- energy;
+## Days 15–30
+
+- Implement verified current-law calculations for the major family/support systems.
+- Detect missing existing entitlements before creating ZERO top-ups.
+- Add source/version traces and stale-rule warnings.
+- Add household-facing explanation and caseworker mode.
+
+**Ship:** benefits-gap finder.
+
+## Days 31–60
+
+- Synthetic + consenting-user application → decision → payment → reconciliation sandbox.
+- Red-team shared custody, separation, income shocks, stale data, duplicate records and appeals.
+- Security/privacy threat model and data-protection impact assessment draft.
+
+**Ship:** payment-grade sandbox.
+
+## Days 61–100
+
+Political target:
+
+- legal entitlement and budget backstop enacted;
+- first live high-need jurisdictions;
+- provisional-payment rules for incomplete but credible data;
+- aggregate public scoreboard.
+
+**Ship:** first legally valid top-ups.
+
+## Months 4–6
+
+- Hardest places first.
+- Weekly error/failure review.
+- Measure unresolved children, median gap, time to payment, appeals, reversal rate and admin burden.
+- Expand material-needs guarantees: school participation, nutrition, digital access and housing pathways.
+
+**Ship:** proven operating model.
+
+## Months 7–9
+
+- National rule version.
+- National coverage regardless of postcode.
+- Automatic income-change handling and periodic reconciliation.
+- Independent audit feed.
+
+**Ship:** national coverage.
+
+## Months 10–12
+
+- Resolve remaining known gaps.
+- Automatically escalate cases beyond service standard.
+- Publish unresolved-case reason codes.
+- Compare administrative outcomes with independent statistical indicators.
+
+**Target:** **unresolved children = 0.**
+
+## Parallel work: abundance engine
+
+ZERO is a guarantee, not the whole economic strategy. In parallel continue:
+
+- AI/productivity diffusion;
+- bureaucracy reduction / once-only government;
+- childcare and labour participation;
 - housing and construction;
-- capital formation and entrepreneurship;
-- R&D and diffusion;
-- trade and international growth corridors.
+- infrastructure ROI;
+- energy;
+- R&D and entrepreneurship;
+- Germany–Vietnam growth corridors;
+- citizen ownership / prosperity-fund concepts.
 
-Also build:
+The long-run aim is that fewer households need ZERO top-ups because wages, housing affordability and household assets improve — while the guarantee remains permanently available.
 
-- public-investment ROI ledger;
-- confidence/uncertainty ranges;
-- non-additivity safeguards so overlapping growth estimates cannot simply be summed;
-- Germany–Vietnam Growth Corridor MVP.
+## National scoreboard
 
-**Ship:** government/politician pitch backed by reproducible calculations.
+1. Children with unresolved ZERO gap.
+2. Median unresolved gap.
+3. Identification → payment time.
+4. Existing-benefit take-up before ZERO.
+5. ZERO annual gross cost.
+6. Dedicated progressive funding.
+7. General-budget backstop.
+8. Reserve coverage.
+9. Appeal/reversal rate.
+10. Independent child-poverty and material-deprivation indicators.
 
-## Month 3–6
-
-- Recruit one benefits-advice organisation, NGO or municipality for a real CARE pilot.
-- Recruit 10–20 German and Vietnamese firms for corridor matching.
-- Track entitlement found, € delivered, processing time, administrative effort and error rate.
-- Track trade opportunity value, introductions, pilots, contracts, jobs and investment.
-- Publish a before/after outcome report.
-
-**Ship:** first real-world outcomes.
-
-## 6–18 months
-
-- Government data/connectors where legally available.
-- Verified identity, consent and once-only data flows.
-- Application routing and machine-readable decision traces.
-- Bank/payment reconciliation.
-- Appeal and correction paths.
-- Production-grade security, privacy and audit model.
-- Institutional dashboard.
-
-**Ship:** institutional CARE pilot.
-
-## 2–5 years
-
-- National CARE interoperability standard.
-- Public-investment outcome ledger.
-- Citizen ownership / prosperity-fund policy prototype.
-- Growth corridors with complementary economies.
-- Public API for researchers, journalists, parties and civil society.
-- National scoreboard for productive capacity and household abundance.
-
-**Ship:** public infrastructure.
-
-## Long-term north star
-
-A state should be able to answer, continuously and audibly:
-
-1. What is each person entitled to?
-2. What has actually reached them?
-3. What is missing, delayed or wrongly denied?
-4. What does each major policy proposal change for them?
-5. How is the proposal funded?
-6. Is the country becoming more productive?
-7. Who owns the additional prosperity?
-8. Did ordinary households become materially more abundant?
+**The top line stays simple: 0.**
