@@ -1,3 +1,10 @@
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from engine.family_guarantee import FamilyCase, calculate_family_guarantee, maximum_safe_recovery
 
 
@@ -44,7 +51,6 @@ def main():
     assert c.disposable_after_guarantee > b.disposable_after_guarantee
     assert round(c.disposable_after_guarantee - b.disposable_after_guarantee, 2) == 35.0
 
-    # Income shock: support rises automatically to keep the household protected.
     job_loss = FamilyCase(
         adults=1,
         child_ages=(5, 10),
@@ -56,7 +62,6 @@ def main():
     assert d.guaranteed
     assert d.top_up > b.top_up
 
-    # A good-faith recovery can only use money above the protected target.
     safe_recovery = maximum_safe_recovery(
         c.disposable_after_guarantee,
         c.target_after_guarantee,
