@@ -1,20 +1,24 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
-from engine.zero_engine import (
+ROOT = Path(__file__).parents[1]
+sys.path.insert(0, str(ROOT))
+
+from engine.zero_engine import (  # noqa: E402
     FundingScenario,
     ZeroHousehold,
     calculate_funding,
     calculate_zero_guarantee,
 )
 
-ROOT = Path(__file__).parents[1]
-
 
 def run_households() -> list[dict]:
-    payload = json.loads((ROOT / "data" / "zero_synthetic_households.json").read_text())
+    payload = json.loads(
+        (ROOT / "data" / "zero_synthetic_households.json").read_text()
+    )
     rows = []
     for item in payload["households"]:
         household = ZeroHousehold(
@@ -45,7 +49,9 @@ def run_funding() -> list[dict]:
         rows.append(
             {
                 "annual_zero_cost_billion_eur": cost,
-                "required_with_20pct_reserve_billion_eur": result.required_with_reserve_billion_eur,
+                "required_with_20pct_reserve_billion_eur": (
+                    result.required_with_reserve_billion_eur
+                ),
                 "reference_sources_billion_eur": result.recurring_sources_billion_eur,
                 "coverage_percent": round(result.coverage_ratio * 100, 1),
                 "surplus_or_gap_billion_eur": result.surplus_or_gap_billion_eur,
@@ -55,4 +61,9 @@ def run_funding() -> list[dict]:
 
 
 if __name__ == "__main__":
-    print(json.dumps({"households": run_households(), "funding": run_funding()}, indent=2))
+    print(
+        json.dumps(
+            {"households": run_households(), "funding": run_funding()},
+            indent=2,
+        )
+    )
