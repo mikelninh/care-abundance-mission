@@ -1,0 +1,101 @@
+name: CARE Guarantees proof
+
+on:
+  pull_request:
+    paths:
+      - 'openwork/**'
+      - 'family/**'
+      - 'food/**'
+      - 'club/**'
+      - 'proof/**'
+      - 'engine/openwork_engine.py'
+      - 'engine/family_guarantee.py'
+      - 'engine/family_fiscal_model.py'
+      - 'engine/food_guarantee.py'
+      - 'engine/income_kernel.py'
+      - 'engine/rights_safe_agent.py'
+      - 'tests/test_openwork.py'
+      - 'tests/test_family_guarantee.py'
+      - 'tests/test_family_fiscal_model.py'
+      - 'tests/test_food_guarantee.py'
+      - 'tests/test_care_club_router.py'
+      - 'tests/test_income_kernel.py'
+      - 'tests/test_rights_safe_agent.py'
+      - 'data/openwork_funding_sources.json'
+      - 'data/family_baselines_2026.json'
+      - 'data/berlin_action_routes.json'
+      - 'docs/OPENWORK*'
+      - 'docs/FAMILY_GUARANTEE*'
+      - 'docs/FOOD_GUARANTEE*'
+      - 'docs/CARE_CLUB*'
+      - 'docs/OUTREACH_DIGITALSERVICE_AGORA.md'
+      - 'agents/openwork_funding_watch.md'
+      - 'agents/family_safety_watch.md'
+      - '.github/workflows/openwork-proof.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: care-guarantees-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pytest
+      - name: Compile deterministic engines
+        run: python -m compileall -q engine/openwork_engine.py engine/family_guarantee.py engine/family_fiscal_model.py engine/food_guarantee.py engine/income_kernel.py engine/rights_safe_agent.py openwork/simulate.py family/simulate.py
+      - name: Run OpenWork guarantee tests
+        run: python -m pytest -q tests/test_openwork.py
+      - name: Run Family Guarantee tests
+        run: python -m pytest -q tests/test_family_guarantee.py tests/test_family_fiscal_model.py
+      - name: Run Food Guarantee tests
+        run: python -m pytest -q tests/test_food_guarantee.py
+      - name: Run CARE Club router tests
+        run: python -m pytest -q tests/test_care_club_router.py
+      - name: Run targeted public-tech proof tests
+        run: python -m pytest -q tests/test_income_kernel.py tests/test_rights_safe_agent.py
+      - name: Run end-to-end simulators
+        run: |
+          python openwork/simulate.py
+          python family/simulate.py
+      - name: Validate registries
+        run: |
+          python -m json.tool data/openwork_funding_sources.json >/dev/null
+          python -m json.tool data/family_baselines_2026.json >/dev/null
+          python -m json.tool data/berlin_action_routes.json >/dev/null
+      - name: Assert worker-facing guarantees
+        run: |
+          grep -q 'PAY GUARANTEED' openwork/index.html
+          grep -q '€20–24/h' openwork/index.html
+          grep -q 'Payroll liquidity' openwork/index.html
+      - name: Assert family-facing guarantees
+        run: |
+          grep -q 'Kein Kind' family/index.html
+          grep -q '€259' family/index.html
+          grep -q '35%+' family/index.html
+          grep -q 'policy prototype' family/index.html
+      - name: Assert food-access guarantees
+        run: |
+          grep -q '7 Tage geschützt' food/index.html
+          grep -q 'Same-Day Food Backstop' docs/FOOD_GUARANTEE.md
+          grep -q 'Cash bleibt' food/index.html
+      - name: Assert CARE Club action frontdoor
+        run: |
+          grep -q 'Ich brauche Hilfe' club/index.html
+          grep -q 'Ich kann helfen' club/index.html
+          grep -q 'Ich will mitbauen' club/index.html
+          grep -q 'CARE DIRECT IMPACT' club/index.html
+          grep -q '0 ungeklärte Essenstage' club/index.html
+      - name: Assert targeted proof boundaries
+        run: |
+          grep -q 'Missing ≠ zero' proof/digitalservice/index.html
+          grep -q 'No AI authority' proof/digitalservice/index.html
+          grep -q 'Assist ≠ decide' proof/agora/index.html
+          grep -q 'BLOCKED_BINDING_DECISION' proof/agora/index.html

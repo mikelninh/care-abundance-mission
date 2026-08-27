@@ -2,85 +2,166 @@
 
 **Produce more. Make essentials abundant. Give people ownership. Prove that value reached them.**
 
-CARE — **Civic Accountability & Resource Entitlement** — is a public-interest prototype for an abundance-oriented state: grow productive capacity, make public promises executable, and verify that money and resources actually reach people.
-
 > **Promise != delivery. Verified receipt = delivery.**
 
-## What this repository contains
+# Highest priority: guarantees + action
 
-- **CARE household engine** — deterministic, source-backed entitlement calculations.
-- **Germany Abundance Mission** — evidence-led growth levers and transparent scenario maths.
-- **Policy Proof** — planned household-level comparison of political proposals: who gets what, for how long, at what fiscal cost, with what funding proof.
-- **Germany–Vietnam Growth Corridor** — a first international growth corridor matching complementary capabilities, trade, investment and talent.
-- **Evidence ledger** — separates `VERIFIED`, `MODELLED`, and `PENDING` claims.
-- **Mission agents** — specifications for evidence monitoring, opportunity discovery and mission control.
+CARE treats four failures as one systems problem:
 
-## V0 status
+1. people want to contribute but useful work is not converted into funded fair employment;
+2. families qualify for support but fragmented rules and delivery can still leave children in poverty;
+3. a monthly income floor alone does not guarantee that food is accessible today;
+4. people who want to help face fragmented organisations, links and unclear next steps.
 
-V0 already includes:
+The mission is therefore:
 
-- official 2025 German GDP/population baselines;
-- an interactive 1–5 year real-growth scenario calculator;
-- an illustrative citizen growth-dividend scenario;
-- evidence-backed high-leverage reform areas;
-- a canonical Berlin household test case;
-- a fail-closed entitlement engine skeleton;
-- starter agent specifications;
-- a roadmap from prototype to institutional pilot.
+> **Protect the floor. Feed people today. Make useful work pay. Make helping simple. Prove what arrived.**
 
-### What V0 deliberately refuses to fake
+---
 
-The canonical household is:
+## Public action layer — CARE Club Berlin
 
-- single parent;
-- 2 children;
-- Berlin;
-- €2,000 gross monthly income;
-- €1,100 monthly rent.
+> **Heute helfen. Heute Hilfe finden.**
 
-The current-law entitlement and party-by-party household outcomes remain **PENDING** until deterministic legal rules, source/version traces and tests are implemented.
+[`club/index.html`](club/index.html) is the first public action router. It has only three front doors:
 
-No verified rule + source + version = **no public euro claim**.
+1. **Ich brauche Hilfe** → verified existing Berlin routes;
+2. **Ich kann helfen** → direct donation, volunteering, food-rescue and company routes;
+3. **Ich will mitbauen** → the guarantee architecture and open-source project.
 
-## Four connected products
+V0 deliberately stores no sensitive family data. Existing Berliner Tafel / foodsharing activity is shown as existing infrastructure, **never as CARE impact**. CARE direct impact starts at zero and only increments from verified delivery receipts.
+
+Public 24-hour activation board: **Issue #3 — CARE Berlin #001**.
+
+See [`docs/CARE_CLUB_BERLIN.md`](docs/CARE_CLUB_BERLIN.md) and [`data/berlin_action_routes.json`](data/berlin_action_routes.json).
+
+---
+
+## Guarantee 1 — OpenWork
+
+> **Work is funded → you can start.**
+
+`Need → Fund → Qualify → Contract → Work → Verify → Pay → Employ`
+
+Hard rules:
+
+- no GREEN/startable mission until 100% of fully loaded employment cost has **binding funding and payroll liquidity**;
+- **€20 gross/hour OpenWork Fair Floor or higher applicable tariff** — a product standard, not a current universal legal entitlement;
+- `Learn → Check → Prove → Unlock → Paid Work` for non-regulated tasks;
+- regulated work still requires the legally necessary credential;
+- productive sample work is paid;
+- at **120 paid hours or 12 weeks recurring demand**, trigger a job-transition review;
+- submitted grant applications are never guaranteed money.
+
+OpenWork V0 includes worker/funder UI, deterministic guarantee engine, funding registry, Skill Passport logic, stakeholder workflows, end-to-end simulator, stress tests and Funding Watch specification.
+
+---
+
+## Guarantee 2 — CARE Family Guarantee
+
+> **No child below the protected floor.**
+
+`Child known → Household resolved → Floor calculated → Gap detected → Auto pay → Receipt → Correct`
+
+### Current 2026 fact that motivates the design
+
+Kindergeld is €259/month per child, but in Grundsicherung it is treated as income when the remaining entitlement is calculated. The CARE strong mode deliberately changes that relationship.
+
+### Proposed CARE rules — not current law
+
+- **protected child base:** €259 Kindergeld per child sits above the Family Guarantee base floor;
+- **dual floor:** use the higher of current legal/housing minimum and latest official anti-poverty threshold;
+- **automatic top-up:** state calculates the gap instead of requiring the family to choose the correct programme;
+- **work always pays:** V0 keeps at least 35% of each additional net earned euro as additional disposable income while top-up remains active;
+- **no good-faith clawback into poverty:** recovery may only use resources above the protected target;
+- **one-screen explanation:** target, resources, top-up, payment and calculation trace;
+- deterministic entitlement maths; AI may assist routing/explanation but cannot set the legal euro amount.
+
+Family Guarantee V0 includes interactive household UI, deterministic engine, weighted fiscal microsimulation scaffold, 720 synthetic household stress combinations, income-shock/work/recovery E2E simulation, source registry and Family Safety Watch.
+
+### Funding rule
+
+OpenWork must secure money per mission. The national Family Guarantee must instead become a **statutory entitlement**: an eligible household cannot be told that an internal programme pot is exhausted. Before legislation, a pilot can only enroll households whose maximum pilot liability is covered by a ring-fenced cash reserve.
+
+CARE deliberately does **not** publish a national cost yet. The strong guarantee must first be microsimulated on representative household data, separating current programme spending, incremental cost, administration savings and behavioural scenarios.
+
+---
+
+## Guarantee 3 — CARE Food Guarantee
+
+> **No one should lack adequate food because money, paperwork or a normal payment route failed. Children need 7-day coverage.**
+
+`Cash floor → Daytime meals → Home coverage → Same-day emergency → Delivery → Receipt`
+
+Hard rules:
+
+- cash first; food benefits never replace wages or Family Guarantee;
+- school/Kita meals alone are not a 7-day guarantee;
+- child coverage includes evenings, weekends and holidays;
+- same-day emergency food access exists when normal payment fails;
+- accessibility, medically necessary diets and allergies are supported;
+- no separate poor-child queue;
+- public claim is fail-closed: CARE only calls food access guaranteed when all required routes are actually available.
+
+See [`docs/FOOD_GUARANTEE.md`](docs/FOOD_GUARANTEE.md), [`engine/food_guarantee.py`](engine/food_guarantee.py), [`tests/test_food_guarantee.py`](tests/test_food_guarantee.py) and [`food/index.html`](food/index.html).
+
+---
+
+# One closed loop
+
+`Food access safe`
+`→ Family financial floor safe`
+`→ useful work available`
+`→ fast practical qualification`
+`→ €20+/h funded employment`
+`→ more net income`
+`→ Skill Passport`
+`→ regular job`
+`→ Family Guarantee tapers smoothly`
+
+**Safety is the floor. Upward mobility is the direction.**
+
+---
+
+## CARE ecosystem
 
 | Product | Core question |
 |---|---|
+| **CARE Club Berlin** | Can someone find help, help, or join the build in two clicks today? |
+| **OpenWork** | What useful work needs doing, who can do it, and is fair pay guaranteed before start? |
+| **Family Guarantee** | Is every known child in a household above the protected floor, and did the top-up land? |
+| **Food Guarantee** | Does every eligible person have adequate food access despite money/admin failure? |
 | **CARE** | What does this person deserve, and did they actually receive it? |
 | **Abundance Engine** | How can Germany produce dramatically more real value? |
-| **Policy Proof** | What does a political proposal mean for this household in euros, duration and funding? |
+| **Policy Proof** | What does a proposal mean for a household in euros, duration and funding? |
 | **Growth Corridors** | Where can Germany create additional wealth through international cooperation? |
 
-The end-to-end chain is:
+Expanded chain:
 
-`Produce → Distribute → Deliver → Verify`
+`Protect → Feed → Enable → Fund Useful Work → Pay → Deliver → Verify → Grow`
 
-## Run locally
-
-Open `index.html` directly in a browser. The V0 front-end has no build step.
-
-Run the engine tests with:
+## Run proofs
 
 ```bash
-python -m pytest -q
+python -m pytest -q tests/test_openwork.py
+python -m pytest -q tests/test_family_guarantee.py tests/test_family_fiscal_model.py
+python -m pytest -q tests/test_food_guarantee.py
+python -m pytest -q tests/test_care_club_router.py
+python openwork/simulate.py
+python family/simulate.py
 ```
 
-## Build order
+Hosted GitHub Actions Run #26 passed on the CARE Club action-router build.
 
-1. Implement the current-law Berlin household calculation.
-2. Expand to 20–30 high-value German entitlements.
-3. Add deterministic calculation traces and regression tests.
-4. Add application → decision → payment → reconciliation simulation.
-5. Build Policy Proof: TODAY vs proposed policy rules.
-6. Add funding-proof calculations and uncertainty.
-7. Build the Germany–Vietnam Growth Corridor MVP.
-8. Recruit a real benefits-advice/municipal pilot and a trade-corridor pilot.
-9. Replace synthetic adapters with real government/data/payment connectors where legally available.
+## Next real-world proofs
 
-See [`ROADMAP.md`](ROADMAP.md) and [`docs/MISSION.md`](docs/MISSION.md).
+1. **CARE Berlin #001:** one real action + five activated people + one frontline conversation + one anonymous system gap.
+2. **Family Guarantee shadow pilot:** one benefits-advice/municipal partner, current-law vs CARE calculations, no money moved initially.
+3. **Food/Family top-up pilot:** ring-fenced incremental fund for a defined cohort; measure food-access gap and poverty gap closed.
+4. **OpenWork first GREEN mission:** real need + employer/payroll + binding funding + liquidity + worker + paid result.
+5. Join the loops: prove a participating household can stay food-secure and above the floor while moving into paid work without an income cliff.
+6. Microsimulate national Family/Food Guarantee fiscal cost before making any affordability claim.
 
-## Principle
+See [`ROADMAP.md`](ROADMAP.md).
 
-The goal is not simply a bigger or smaller state. The goal is **greater human possibility, backed by auditable delivery**.
-
-**Bake more cake. Give everyone a stake in the bakery. Show the receipts.**
+**Bake more cake. Give everyone a stake in the bakery. Make sure every child can eat. Show the receipts.**

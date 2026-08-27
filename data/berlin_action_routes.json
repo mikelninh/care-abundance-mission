@@ -1,0 +1,83 @@
+{
+  "verified_at": "2026-08-26",
+  "scope": "Berlin",
+  "rules": [
+    "CARE does not collect sensitive family data in V0.",
+    "Need routes point to existing public/nonprofit services until CARE has its own funded delivery capacity.",
+    "Existing network outcomes must never be counted as CARE impact.",
+    "Acute danger routes to 112; acute child crisis routes to the 24/7 Kindernotdienst.",
+    "Food benefits never replace the protected cash floor."
+  ],
+  "need_help": [
+    {
+      "id": "food_weekly",
+      "label": "Lebensmittel für zuhause",
+      "provider": "Berliner Tafel / LAIB und SEELE",
+      "url": "https://www.berliner-tafel.de/laib-und-seele/die-praxis/kunden/ausgabestellen",
+      "phone": "+49 30 787 163 52",
+      "availability": "Ausgabestellen nach PLZ; Koordinationsbüro werktags",
+      "verified": true
+    },
+    {
+      "id": "family_benefits",
+      "label": "Familienberatung und finanzielle Hilfe",
+      "provider": "Berliner FamilienServiceBüros",
+      "url": "https://familienportal.berlin.de/artikel/das-familienservicebuero-die-erste-adresse-in-ihrem-kiez",
+      "verified": true
+    },
+    {
+      "id": "child_crisis_24_7",
+      "label": "Kind akut in Not",
+      "provider": "Berliner Kindernotdienst",
+      "url": "https://www.berlin.de/notdienst-kinderschutz/kindernotdienst/",
+      "phone": "+49 30 610061",
+      "availability": "24/7, 365 Tage",
+      "verified": true
+    }
+  ],
+  "can_help": [
+    {
+      "id": "donate_money",
+      "label": "Geld direkt spenden",
+      "provider": "Berliner Tafel",
+      "url": "https://www.berliner-tafel.de/helfen/geldspenden",
+      "verified": true
+    },
+    {
+      "id": "volunteer",
+      "label": "Ehrenamtlich mithelfen",
+      "provider": "Berliner Tafel / LAIB und SEELE",
+      "url": "https://www.berliner-tafel.de/laib-und-seele/die-praxis/ehrenamtliche",
+      "verified": true
+    },
+    {
+      "id": "rescue_food",
+      "label": "Lebensmittel retten",
+      "provider": "foodsharing Berlin",
+      "url": "https://foodsharing.de/region/berlin",
+      "verified": true
+    },
+    {
+      "id": "corporate_volunteering",
+      "label": "Unternehmen / Team-Einsatz",
+      "provider": "Berliner Tafel",
+      "url": "https://www.berliner-tafel.de/helfen/ehrenamt/corporate-volunteering",
+      "verified": true
+    }
+  ],
+  "public_network_snapshot": {
+    "not_care_impact": true,
+    "berliner_tafel_regular_distribution_sites": 48,
+    "berliner_tafel_interim_distribution_sites": 7,
+    "berliner_tafel_social_facilities_supported": 400,
+    "foodsharing_berlin_active_foodsavers_30d_snapshot": 3256,
+    "foodsharing_berlin_rescued_tonnes_30d_snapshot": 316,
+    "snapshot_note": "Public figures observed on 2026-08-26; dynamic figures can change."
+  },
+  "care_direct_impact": {
+    "verified_households_served": 0,
+    "verified_direct_euros_delivered": 0,
+    "verified_food_access_days_guaranteed": 0,
+    "rule": "Increment only from verified CARE delivery receipts."
+  }
+}

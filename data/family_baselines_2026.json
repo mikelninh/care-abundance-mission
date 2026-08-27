@@ -1,0 +1,47 @@
+{
+  "verified_on": "2026-08-26",
+  "status": "mixed_verified_and_policy_prototype",
+  "verified_public_baselines": {
+    "kindergeld_monthly_per_child_eur": {
+      "value": 259,
+      "valid_from": "2026-01-01",
+      "source": "Bundesagentur für Arbeit"
+    },
+    "grundsicherung_regelbedarfe_monthly_eur": {
+      "adult_single": 563,
+      "adult_partner": 506,
+      "child_0_5": 357,
+      "child_6_13": 390,
+      "child_14_17": 471,
+      "valid_from": "2026-01-01",
+      "source": "BMAS"
+    },
+    "latest_poverty_threshold_monthly_eur": {
+      "single_adult": 1446,
+      "two_adults_two_children_under_14": 3036,
+      "survey": "EU-SILC 2025",
+      "published": "2026-02-03",
+      "source": "Destatis"
+    },
+    "poverty_risk": {
+      "children_under_18_percent_2024": 15.2,
+      "single_parent_households_percent_2025_survey": 28.9,
+      "couples_with_children_percent_2025_survey": 12.0,
+      "source": "Destatis"
+    }
+  },
+  "care_policy_rules_not_current_law": {
+    "protect_kindergeld_above_base_floor": true,
+    "work_keep_rate": 0.35,
+    "base_floor_formula": "max(legal_minimum, latest_official_poverty_threshold)",
+    "good_faith_recovery_may_breach_floor": false,
+    "automatic_top_up": true
+  },
+  "pending_before_national_budget_claim": [
+    "representative household microsimulation",
+    "incremental annual fiscal cost",
+    "administrative savings measured separately",
+    "legal review across affected benefit and tax laws",
+    "register/data-access implementation design"
+  ]
+}
