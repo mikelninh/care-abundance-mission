@@ -2,6 +2,11 @@
   publish = "public"
   functions = "netlify/functions"
 
+[dev]
+  publish = "public"
+  functions = "netlify/functions"
+  port = 8888
+
 [[redirects]]
   from = "/api/evaluate"
   to = "/.netlify/functions/evaluate"
@@ -12,4 +17,3 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
