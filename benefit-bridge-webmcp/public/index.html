@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Benefit Bridge — a WebMCP proof showing how public-benefit websites can expose safe, source-linked tools to people and their AI agents." />
-  <title>Benefit Bridge — WebMCP public benefits proof</title>
+  <meta name="description" content="Benefit Bridge — a WebMCP proof for reusable benefit evidence, source-linked rules and safe agent-native public services." />
+  <title>Benefit Bridge — Benefit Passport + WebMCP</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
   <header class="topbar shell">
-    <a class="brand" href="#top"><span class="brand-mark">B</span><span>Benefit Bridge</span></a>
+    <a class="brand" href="#top"><span class="brand-mark">B</span><span>Benefit Bridge</span><span class="version-chip">v0.2</span></a>
     <div class="top-actions">
+      <span id="saved-status" class="saved-status">No saved passport</span>
       <span id="webmcp-status" class="status-pill"><span class="status-dot"></span>Checking WebMCP…</span>
       <a class="ghost-link" href="https://github.com/mikelninh" target="_blank" rel="noreferrer">GitHub ↗</a>
     </div>
@@ -20,47 +21,50 @@
   <main id="top" class="shell">
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">WEBMCP CHALLENGE PROOF · PUBLIC-INTEREST AI</div>
-        <h1>The government website your <span>agent can actually use.</span></h1>
-        <p class="hero-lede">One household input. Clear benefit signals, visible evidence, official sources and agent-callable tools — without scraping buttons or hiding uncertainty.</p>
-        <div class="hero-badges"><span>Deterministic rules</span><span>Source-linked</span><span>Human boundary</span><span>Replayable trace</span></div>
+        <div class="eyebrow">WEBMCP CHALLENGE · BENEFIT PASSPORT V0.2</div>
+        <h1>Tell the state once. <span>Reuse the proof.</span></h1>
+        <p class="hero-lede">One household snapshot becomes a reusable Benefit Passport: self-attested claims stay distinct from evidence, benefits link to official sources, and agents can prepare the next service without inventing facts or silently applying.</p>
+        <div class="hero-badges"><span>Once-only data</span><span>Evidence provenance</span><span>Rights graph</span><span>Human approval</span><span>Replayable</span></div>
       </div>
       <aside class="agent-card">
-        <div class="agent-head"><span class="pulse"></span><span>Agent surface</span><strong>6 tools</strong></div>
-        <div class="tool-mini"><code>check_eligibility</code><span>read only</span></div>
-        <div class="tool-mini"><code>calculate_support</code><span>read only</span></div>
-        <div class="tool-mini"><code>list_missing_evidence</code><span>read only</span></div>
-        <div class="tool-mini"><code>explain_result</code><span>read only</span></div>
-        <div class="tool-mini"><code>prepare_next_steps</code><span>read only</span></div>
-        <div class="tool-mini"><code>replay_case</code><span>read only</span></div>
+        <div class="agent-head"><span class="pulse"></span><span>Agent surface</span><strong>9 TOOLS</strong></div>
+        <div class="tool-mini"><code>check_eligibility</code><span>read</span></div>
+        <div class="tool-mini"><code>calculate_support</code><span>read</span></div>
+        <div class="tool-mini"><code>list_missing_evidence</code><span>read</span></div>
+        <div class="tool-mini"><code>explain_result</code><span>read</span></div>
+        <div class="tool-mini"><code>prepare_next_steps</code><span>read</span></div>
+        <div class="tool-mini"><code>replay_case</code><span>read</span></div>
+        <div class="tool-mini tool-new"><code>derive_benefit_passport</code><span>new</span></div>
+        <div class="tool-mini tool-new"><code>get_passport_status</code><span>new</span></div>
+        <div class="tool-mini tool-new"><code>plan_application</code><span>new</span></div>
       </aside>
     </section>
 
     <section class="workspace">
       <div class="panel input-panel">
         <div class="panel-heading"><div><span class="section-index">01</span><h2>Household snapshot</h2></div><button id="load-demo" class="text-button" type="button">Load Berlin demo</button></div>
-        <p class="muted">A deliberately small input surface. Benefit Bridge asks only for what the current check needs.</p>
+        <p class="muted">Claims are self-attested. Benefit Bridge never labels typed values as verified evidence.</p>
         <form id="household-form">
           <div class="segmented" aria-label="Household type">
             <label><input type="radio" name="householdType" value="single" checked><span>Single parent</span></label>
             <label><input type="radio" name="householdType" value="couple"><span>Couple</span></label>
           </div>
           <div class="field-grid">
-            <label class="field"><span>Gross household income</span><div class="money-input"><span>€</span><input id="income" type="number" min="0" step="50" value="2000" required></div><small>per month</small></label>
-            <label class="field"><span>Warm rent</span><div class="money-input"><span>€</span><input id="rent" type="number" min="0" step="50" value="1100" required></div><small>per month</small></label>
+            <label class="field"><span>Gross household income</span><div class="money-input"><span>€</span><input id="income" type="number" min="0" step="50" value="2000" required></div><small>self-attested · per month</small></label>
+            <label class="field"><span>Warm rent</span><div class="money-input"><span>€</span><input id="rent" type="number" min="0" step="50" value="1100" required></div><small>self-attested · per month</small></label>
           </div>
           <div class="children-block">
             <div class="field-title"><span>Children</span><button id="add-child" class="text-button" type="button">+ Add child</button></div>
             <div id="children-list" class="children-list"></div>
           </div>
-          <label class="check-row"><input id="kindergeld" type="checkbox" checked><span><strong>Currently receives Kindergeld</strong><small>Used as an input signal, not inferred.</small></span></label>
-          <button id="evaluate-button" class="primary-button" type="submit"><span>Check support pathways</span><span>→</span></button>
+          <label class="check-row"><input id="kindergeld" type="checkbox" checked><span><strong>Currently receives Kindergeld</strong><small>Input signal only; not inferred or independently verified.</small></span></label>
+          <button id="evaluate-button" class="primary-button" type="submit"><span>Build my bridge</span><span>→</span></button>
         </form>
         <p class="fineprint">Prototype orientation only. No application is submitted and no legal entitlement is asserted.</p>
       </div>
 
       <div class="panel results-panel" id="results-panel" aria-live="polite">
-        <div class="panel-heading"><div><span class="section-index">02</span><h2>Your bridge</h2></div><span id="trace-badge" class="trace-badge">No trace yet</span></div>
+        <div class="panel-heading"><div><span class="section-index">02</span><h2>Your support map</h2></div><span id="trace-badge" class="trace-badge">No trace yet</span></div>
         <div id="empty-state" class="empty-state">
           <div class="empty-orbit"><span>↗</span></div>
           <h3>Turn uncertainty into next steps.</h3>
@@ -74,7 +78,7 @@
           </div>
           <div id="benefit-cards" class="benefit-cards"></div>
           <div class="split-section">
-            <div><h3>Evidence checklist</h3><div id="evidence-list" class="stack-list"></div></div>
+            <div><h3>Evidence to prepare</h3><div id="evidence-list" class="stack-list"></div></div>
             <div><h3>Next best actions</h3><div id="next-steps" class="stack-list"></div></div>
           </div>
           <details class="trace-details"><summary><span>Inspect decision trace</span><span>Show logic ↓</span></summary><div id="trace-list" class="trace-list"></div></details>
@@ -82,20 +86,69 @@
       </div>
     </section>
 
+    <section id="passport-panel" class="passport panel hidden">
+      <div class="passport-header">
+        <div>
+          <span class="section-index">03</span>
+          <div class="passport-title"><span class="passport-icon">◈</span><div><p class="eyebrow-small">BENEFIT PASSPORT</p><h2>Collect once. Reuse safely.</h2></div></div>
+        </div>
+        <div class="passport-actions">
+          <button id="forget-passport" type="button" class="secondary-button hidden">Forget local copy</button>
+          <button id="save-passport" type="button" class="passport-button">Save to this browser</button>
+        </div>
+      </div>
+      <p class="passport-intro">The passport keeps <strong>claims</strong>, <strong>documentary evidence</strong>, and <strong>derived benefit signals</strong> separate. Saving is an explicit human action and stays local in V0.2.</p>
+      <div class="passport-metrics">
+        <div><span>Passport</span><strong id="passport-id">—</strong></div>
+        <div><span>Reusable claims</span><strong id="claim-count">—</strong></div>
+        <div><span>Evidence categories</span><strong id="evidence-count">—</strong></div>
+        <div><span>Cross-service reuse</span><strong id="reuse-count">—</strong></div>
+      </div>
+
+      <div class="passport-grid">
+        <div class="passport-column">
+          <div class="subhead"><h3>Claims</h3><span>self-attested ≠ verified</span></div>
+          <div id="passport-claims" class="claim-list"></div>
+        </div>
+        <div class="passport-column">
+          <div class="subhead"><h3>Evidence locker</h3><span>human-controlled readiness</span></div>
+          <div id="passport-evidence" class="evidence-locker"></div>
+        </div>
+      </div>
+
+      <div class="readiness-block">
+        <div class="subhead"><h3>Reuse across services</h3><span>one category can satisfy multiple preparation paths</span></div>
+        <div id="service-readiness" class="service-readiness"></div>
+      </div>
+
+      <div class="rights-graph">
+        <div class="subhead"><h3>Rights graph</h3><span>signals are not awards</span></div>
+        <div class="graph-flow">
+          <div class="graph-node known"><small>known anchor</small><strong>Kindergeld</strong><span>€259 / child</span></div>
+          <div class="graph-arrow">→</div>
+          <div class="graph-node potential"><small>pre-check</small><strong>KiZ</strong><span>up to €297 / child</span></div>
+          <div class="graph-arrow split-arrow">↘</div>
+          <div class="graph-node official"><small>official check</small><strong>Wohngeld</strong><span>no guessed amount</span></div>
+          <div class="graph-arrow">→</div>
+          <div class="graph-node downstream"><small>if awarded</small><strong>Bildung & Teilhabe</strong><span>€195 school supplies / year + more</span></div>
+        </div>
+      </div>
+    </section>
+
     <section class="proof-grid">
-      <article><span class="section-index">03</span><h3>Same capability, two interfaces.</h3><p>The person uses the visual flow. The agent gets structured WebMCP tools. Both call the same server-side evaluator, so there is no secret “AI version” of the rules.</p></article>
-      <article><span class="section-index">04</span><h3>Authority stays outside the model.</h3><p>Tools can inspect, calculate anchored values, explain and prepare. They cannot silently apply, submit, sign or claim a statutory entitlement.</p></article>
-      <article><span class="section-index">05</span><h3>Failure becomes inspectable.</h3><p>Every evaluation produces a stable trace ID and explicit rule steps. The replay tool returns the exact evidence and boundary that produced the result.</p></article>
+      <article><span class="section-index">04</span><h3>Once-only without magical trust.</h3><p>Benefit Passport reuses structured facts, but never upgrades typed claims into verified evidence. Provenance travels with the data.</p></article>
+      <article><span class="section-index">05</span><h3>Benefits form a graph.</h3><p>KiZ or Wohngeld can unlock Bildung & Teilhabe. The system shows downstream rights while keeping “possible” and “actually awarded” rigorously separate.</p></article>
+      <article><span class="section-index">06</span><h3>Agents prepare. Humans authorise.</h3><p>An agent can check, explain, replay and build a preparation plan. Saving the passport or acting on an application remains an explicit human choice.</p></article>
     </section>
 
     <section class="simulator panel">
-      <div class="panel-heading"><div><span class="section-index">06</span><h2>Agent simulator</h2></div><span class="lab-pill">LOCAL PROOF HARNESS</span></div>
-      <p class="muted">No WebMCP-enabled browser? This harness invokes the exact same registered tool handlers so reviewers can test the contract anyway.</p>
-      <div class="simulator-grid"><div id="tool-buttons" class="tool-buttons"></div><pre id="tool-output">Select a tool after running a household check.</pre></div>
+      <div class="panel-heading"><div><span class="section-index">07</span><h2>Agent simulator</h2></div><span class="lab-pill">WEBMCP CONTRACT HARNESS</span></div>
+      <p class="muted">No WebMCP-enabled browser? This invokes the exact same registered handlers so reviewers can inspect the tool contract and returned evidence.</p>
+      <div class="simulator-grid"><div id="tool-buttons" class="tool-buttons"></div><pre id="tool-output">Select a tool after building a household bridge.</pre></div>
     </section>
   </main>
 
-  <footer class="shell footer"><span>Benefit Bridge · WebMCP proof</span><span>Built for inspectability, not magical thinking.</span></footer>
+  <footer class="shell footer"><span>Benefit Bridge · WebMCP proof · v0.2</span><span>Less form filling. More visible proof.</span></footer>
   <script type="module" src="/app.js"></script>
 </body>
 </html>
