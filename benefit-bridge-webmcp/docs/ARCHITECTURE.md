@@ -1,117 +1,117 @@
-# Benefit Bridge architecture — v0.2
+# Benefit Bridge architecture — v0.3
 
 ## Principle
 
-**Claims are not evidence. Evidence is not an authority decision.**
+**Claims are not evidence. Evidence is not a decision. Preparation is not submission.**
 
-Benefit Bridge keeps those three layers separate all the way through the system.
+V0.3 adds a fourth boundary: applicant identity/contact can remain browser-local while the stateless benefit engine evaluates only the household snapshot.
 
 ## Data flow
 
 ```text
-Household form / WebMCP household input
-                 │
-                 ▼
-       normalize + validate
-                 │
-                 ▼
-     deterministic policy pack
-                 │
-        ┌────────┼────────┐
-        ▼        ▼        ▼
-   benefit    trace    Benefit Passport
-   signals             ├─ claims
-                       ├─ evidence map
-                       ├─ reuse matrix
-                       └─ downstream graph
-                 │
-                 ▼
-         preparation plans
-                 │
-                 ▼
-       explicit human action
+                         ┌────────────────────────────┐
+Household form/WebMCP ──→│ stateless /api/evaluate    │
+                         │ deterministic benefit pack │
+                         └─────────────┬──────────────┘
+                                       │
+                          trace + Benefit Passport
+                                       │
+                                       ▼
+                     ┌─────────────────────────────────┐
+local applicant data │ browser-local packet-core.js    │ human-marked evidence
+────────────────────→│ prefill + provenance + blockers │←────────────────────
+                     └───────────────┬─────────────────┘
+                                     │
+                              application packet
+                                     │
+                          explicit human review gate
+                                     │
+                               local JSON export
+                                     │
+                              official service ↗
 ```
+
+Applicant identity is not necessary for the Benefit Bridge evaluation endpoint. This is deliberate data minimisation.
 
 ## Trust layers
 
 ### 1. Claim
-A value the person supplied, for example `monthlyGrossIncome = 2000`.
-
-Status in V0.2: `self_attested`.
+User-supplied structured value, such as monthly income. Status: `self_attested`.
 
 ### 2. Evidence
-A document or trusted source that could support a claim, for example a payslip, rental agreement or decision notice.
-
-V0.2 stores **no documents**. The UI only tracks whether a person has marked an evidence category as prepared.
+A document category that may support a claim. V0.3 tracks only whether the human marked it prepared; it stores no document bytes.
 
 ### 3. Derived signal
-A deterministic result from the pinned demo policy pack, for example:
+A deterministic orientation result from the pinned policy pack.
 
-- 2 eligible children × €259 Kindergeld anchor
-- KiZ preliminary check worth pursuing
-- Wohngeld should be checked officially
+### 4. Prepared application field
+A packet field with explicit provenance:
 
-### 4. Authority decision
-The actual decision from Familienkasse, Wohngeldstelle, municipality, etc.
+- `self_attested_claim`
+- `local_human_input`
+- `missing_human_input`
 
-Benefit Bridge never fabricates this layer.
+### 5. Human review manifest
+A local record that the person reviewed claims/details, evidence status and the non-submission boundary.
 
-## Rights graph
+### 6. Authority decision
+The real Familienkasse/Wohngeldstelle/municipal decision. Benefit Bridge does not create it.
+
+## Packet state machine
 
 ```text
-Kindergeld ──→ KiZ signal ─────────┐
-                                   ├──→ Bildung & Teilhabe (if actually awarded)
-Wohngeld official check ───────────┘
+DRAFT_BLOCKED
+  │  fill required local fields / mark evidence prepared
+  ▼
+READY_FOR_HUMAN_REVIEW
+  │  three explicit confirmations
+  ▼
+APPROVED_FOR_LOCAL_EXPORT
+  │
+  ├── blockers remain → reviewed draft export
+  └── no blockers     → official-service handoff ready
+
+SUBMITTED  ← intentionally does not exist
 ```
 
-The graph deliberately represents the edge as conditional until a real KiZ/Wohngeld award exists.
+`submissionAllowed` is false in both packet preparation and validation outputs.
 
 ## Evidence reuse
 
-V0.2 maps reusable evidence categories across services:
-
-| Evidence category | KiZ | Wohngeld | Bildung & Teilhabe |
+| Evidence category | KiZ | Wohngeld | BuT |
 | --- | :---: | :---: | :---: |
 | child / household | ✓ | ✓ | ✓ |
+| identity documents |  | ✓ |  |
 | income evidence | ✓ | ✓ |  |
 | housing evidence | ✓ | ✓ |  |
 | recent rent-payment proof |  | ✓ |  |
 | KiZ / Wohngeld award notice |  |  | ✓ |
 
-This is a **preparation model**, not a universal statutory checklist. Individual cases can require more evidence.
+This is a challenge preparation model, not an exhaustive statutory checklist.
 
 ## WebMCP contract
 
-The page registers nine read-only tools through `document.modelContext.registerTool(...)`.
+Eleven read-only tools are registered with `document.modelContext.registerTool(...)`.
 
-The three v0.2 passport tools are:
+V0.3 adds:
 
-- `derive_benefit_passport` — derive claims/evidence/reuse from a household
-- `get_passport_status` — inspect the latest passport plus human-marked local preparation state
-- `plan_application` — produce a KiZ/Wohngeld/BuT evidence preparation plan
+- `prepare_application_packet`
+- `validate_application_packet`
 
-No registered tool can submit, sign, or create a legal application.
+The human Application Studio and these tools call the same `public/packet-core.js` functions.
+
+**There is no `submit_application` tool.**
 
 ## Storage
 
-V0.2:
+- `/api/evaluate`: stateless
+- Benefit Passport: localStorage only after explicit click
+- applicant identity/contact: current browser/session fields, included only if the human exports
+- documents: not uploaded or stored
+- export: local JSON Blob generated after review approval
 
-- server: **stateless**
-- passport save: **browser localStorage, explicit human click only**
-- evidence documents: **not stored**
-
-Future Netlify-native option: encrypted pseudonymous state in Netlify Blobs or structured state in Netlify Database, only after adding a real authentication/consent model. Netlify Blobs is suitable as a simple key/value store, but storage technology alone is not a trust model.
+A production implementation would need a real identity/consent/retention/trust model before adding persistent sensitive evidence.
 
 ## Evaluation
 
-Deterministic tests focus on boundaries and regression behaviour rather than “AI intelligence”:
-
-- amount anchors
-- policy gates
-- stable trace/passport IDs
-- claim/evidence separation
-- downstream conditionality
-- evidence reuse planning
-- unsupported-service failures
-
-The goal is for every discovered failure to become a repeatable test.
+The deterministic suite covers both correctness and authority boundaries. V0.3 specifically tests that a complete and human-reviewed packet can become ready for official-service handoff while `submissionAllowed` stays false.
