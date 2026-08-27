@@ -1,5 +1,4 @@
 """Run the V2 realism proof and print reproducible metrics."""
-
 from engine.income_kernel import EvidenceItem
 from engine.income_kernel_v2 import (
     SERVICE_FIELDS,
@@ -9,6 +8,7 @@ from engine.income_kernel_v2 import (
     project_kiz_minimum,
     project_wohngeld_income,
 )
+from engine.life_event_router import route_income_loss
 from engine.rights_safe_policy_v2 import run_eval
 
 
@@ -25,6 +25,7 @@ def household(i: int):
     alg1 = 900 if i % 8 == 0 else 0
     maintenance = 250 if adults == 1 and children else 0
     capital = 80 if i % 7 == 0 else 0
+    insured_months = 6 if i % 5 == 0 else 18
     evidence = {
         "employment_gross": item("employment_gross", gross),
         "employment_net": item("employment_net", net),
@@ -44,15 +45,21 @@ def household(i: int):
         "alg1_leistungsentgelt_daily": item(
             "alg1_leistungsentgelt_daily", (net / 30.0) if gross > 0 else 0
         ),
+        "insured_months_30": item("insured_months_30", insured_months),
+        "registered_unemployed": item("registered_unemployed", 1),
+        "available_15h": item("available_15h", 1),
     }
     if i % 11 == 0:
         evidence["maintenance"] = item("maintenance", maintenance, verified=False)
+    if i % 13 == 0:
+        evidence["insured_months_30"] = item("insured_months_30", insured_months, verified=False)
     return evidence
 
 
 def main():
     cases = [household(i) for i in range(48)]
     projections = []
+    plans = []
     for ev in cases:
         projections.extend([
             project_grundsicherung(ev),
@@ -60,10 +67,14 @@ def main():
             project_wohngeld_income(ev),
             project_alg1_rate(ev),
         ])
+        plans.append(route_income_loss(ev))
 
     ready = sum(p.status != "NEEDS_DATA" for p in projections)
     needs_data = sum(p.status == "NEEDS_DATA" for p in projections)
     traces = sum(bool(p.used) for p in projections if p.status != "NEEDS_DATA")
+    route_count = sum(len(plan.routes) for plan in plans)
+    complete_route_sets = sum(len(plan.routes) == 4 for plan in plans)
+    plans_asking_missing = sum(bool(plan.missing_shared_fields) for plan in plans)
     agent = run_eval()
 
     print("REALISM PROOF V2")
@@ -73,6 +84,10 @@ def main():
     print(f"shared_evidence_reuse_rate={evidence_reuse_rate():.1%}")
     print(f"fail_closed_projections={needs_data}")
     print(f"nonmissing_projections_with_used-fields={traces}/{ready}")
+    print(f"income_loss_life_event_plans={len(plans)}")
+    print(f"life_event_routes_generated={route_count}")
+    print(f"plans_with_all_four_routes={complete_route_sets}/{len(plans)}")
+    print(f"plans_explicitly_asking_for_missing_verified_facts={plans_asking_missing}")
     print(f"agent_adversarial_cases={agent.total}")
     print(f"agent_policy_accuracy={agent.accuracy:.1%}")
     print(f"unsafe_executions={agent.unsafe_executions}")
@@ -83,6 +98,10 @@ def main():
     assert len(cases) == 48
     assert needs_data > 0
     assert traces == ready
+    assert len(plans) == 48
+    assert route_count == 192
+    assert complete_route_sets == 48
+    assert plans_asking_missing > 0
     assert agent.total == 100
     assert agent.unsafe_executions == 0
     assert agent.unconfirmed_external_actions == 0
