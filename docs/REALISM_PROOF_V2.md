@@ -13,6 +13,26 @@ Priority is based on reach and vulnerability, not on pretending the population u
 - **Wohngeld** — 1.21678m pure Wohngeld households at 31 Dec 2024.
 - **Arbeitslosengeld I** — about 1.104m recipients in March 2026; especially valuable as the transition layer after job loss and before/alongside means-tested support.
 
+## Life-event orchestration: income loss
+
+The citizen-facing product should not require a person to know which programme they need before the state can help. `engine/life_event_router.py` therefore starts with one life event — **income loss** — and reuses one verified evidence packet to prepare four coordinated routes:
+
+1. **ALG I first**: standard precheck for unemployment registration, ability to work 15+ hours and the standard 12 insured months within the prior 30 months; the existing 60/67% amount slice is reused.
+2. **KiZ in parallel where children are present**: reuse the statutory minimum-income gate; full family/need/assets checks remain explicit missing work.
+3. **Wohngeld in parallel**: reuse the income projection; rent, household and remaining WoGG facts remain explicit.
+4. **Grundsicherung as safety net**: keep the means-tested fallback visible where ALG I is absent or insufficient; never infer final need from income alone.
+
+The router does not choose a legal entitlement. Its product job is to answer:
+- what can already be checked from verified facts;
+- which services are plausible next routes;
+- which exact facts are still missing;
+- which facts can be reused instead of recollected.
+
+Official transition context:
+- https://www.arbeitsagentur.de/arbeitslos-arbeit-finden/arbeitslosengeld/finanzielle-hilfen/arbeitslosengeld-anspruch-hoehe-dauer
+- https://www.arbeitsagentur.de/grundsicherung/finanziell-absichern/uebergang-grundsicherung
+- https://www.arbeitsagentur.de/grundsicherung/finanziell-absichern/bedarfe
+
 ## Implemented rule slices
 
 ### Grundsicherungsgeld / SGB II
@@ -65,10 +85,12 @@ Sources:
 ### Arbeitslosengeld I
 
 Implemented:
+- standard 12-in-30-month insurance precheck plus registration / availability flags for the life-event router;
 - official 60% / 67% replacement-rate layer applied to supplied daily Leistungsentgelt;
 - 67% where a qualifying child is present, 60% otherwise.
 
 Not implemented:
+- short qualifying-period/special-case adjudication;
 - full upstream Bemessungsentgelt/Leistungsentgelt tax calculation, eligibility period or duration.
 
 Source:
@@ -81,28 +103,12 @@ Source:
 Current deterministic fixture:
 - 48 synthetic households;
 - 4 service projections each = 192 projections;
+- 48 income-loss life-event plans, each preserving all four routes;
 - shared canonical evidence packet;
 - deliberately unverified evidence in a subset to prove fail-closed behaviour;
 - 100 adversarial public-agent actions.
 
-Local pre-push result:
-
-```text
-households=48
-services=4
-projections=192
-shared_evidence_reuse_rate=34.8%
-fail_closed_projections=15
-nonmissing_projections_with_used-fields=177/177
-agent_adversarial_cases=100
-agent_policy_accuracy=100.0%
-unsafe_executions=0
-unconfirmed_external_actions=0
-missing_action_receipts=0
-safe_assistance_blocked=0
-```
-
-These metrics are **fixture/eval metrics, not population impact claims**. The 100% action-policy accuracy reflects a deterministic labelled policy set, not general LLM safety.
+The hosted GitHub Actions run is the source of truth for the current numbers. Metrics are **fixture/eval metrics, not population impact claims**. The action-policy accuracy is against a deterministic labelled policy set, not general LLM safety.
 
 ## Next realism gate
 
