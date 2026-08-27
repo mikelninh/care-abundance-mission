@@ -1,113 +1,118 @@
 # Benefit Bridge 🌉
 
-**A WebMCP proof for public benefits: one trustworthy capability surface for people and their AI agents.**
+**The public-benefits website an AI agent can use without inventing authority.**
 
-Benefit Bridge turns a small household snapshot into source-linked benefit orientation, an evidence checklist, safe next actions and a replayable rule trace. The visual UI and the agent tools call the same deterministic evaluator.
+Benefit Bridge is a WebMCP challenge proof for agent-native public services. V0.2 adds a **Benefit Passport**: a reusable household snapshot that keeps self-attested claims, documentary evidence, derived benefit signals and authority decisions visibly separate.
 
-> **Boundary:** this is a challenge prototype, not a statutory calculator, benefits decision or legal advice. It deliberately refuses to invent exact values where the official calculation is more complex.
-
-## Why WebMCP
-
-Most government websites are technically readable by agents but not *agent-ready*. An agent has to scrape text, infer which form controls matter and guess whether clicking a button is safe.
-
-Benefit Bridge exposes explicit browser tools instead:
-
-- `check_eligibility`
-- `calculate_support`
-- `list_missing_evidence`
-- `explain_result`
-- `prepare_next_steps`
-- `replay_case`
-
-All six are registered with the current `document.modelContext.registerTool(definition, { signal })` API and are read-only. There is no autonomous application submission.
-
-## What is real in this proof
-
-The current policy pack pins a few official 2026 anchors:
-
-- **Kindergeld:** €259 per eligible child / month from January 2026.
-- **Kinderzuschlag:** up to €297 per child / month.
-- **KiZ preliminary income floor:** €600 gross for single parents and €900 for couples.
-
-The prototype **does not** claim to reproduce the complete KiZ or Wohngeld statutory calculations. KiZ is clearly labelled as a maximum potential amount; Wohngeld is routed to an official check.
-
-Official sources are linked in every result.
-
-## Architecture
+## V0.2 — Benefit Passport
 
 ```text
-person ── visual form ───────────────┐
-                                     │
-agent ── WebMCP tools ───────────────┼── POST /api/evaluate
-                                     │          │
-                                     │          ▼
-                                     └── deterministic policy engine
-                                                │
-                          sources + uncertainty + trace + boundary
+household claims
+      ↓
+deterministic benefit signals
+      ↓
+Benefit Passport
+  ├─ self-attested claims
+  ├─ evidence categories
+  ├─ cross-service reuse matrix
+  └─ downstream-rights graph
+      ↓
+agent prepares next service
+      ↓
+human reviews / supplies evidence / applies
 ```
 
-The design rule is simple: **a tool wraps the same capability the website already uses.** There is no hidden “agent-only” rules path.
+The model can inspect and prepare. **Authority still lives outside the model.**
+
+## Berlin demo
+
+Single parent · children 7 + 12 · €2,000 gross/month · €1,100 warm rent:
+
+- **€518/month known Kindergeld anchor** — 2 × €259
+- **up to €594/month KiZ worth checking** — explicitly a maximum, not an entitlement
+- **Wohngeld → official check** — no guessed statutory amount
+- **Bildung & Teilhabe → conditional downstream right** if KiZ/Wohngeld is actually awarded; 2026 school-supplies anchor: **€195/year**
+
+## What the Benefit Passport proves
+
+- typed values stay labelled **self-attested** rather than magically becoming verified evidence
+- recurring evidence categories are mapped once and reused across KiZ / Wohngeld / Bildung & Teilhabe preparation
+- a human can mark evidence as *prepared* locally; that still does **not** mean verified
+- local passport saving requires an explicit human click
+- V0.2 stores no passport data server-side
+- downstream rights are represented as a graph without confusing “possible” with “awarded”
+
+## WebMCP surface — 9 read-only tools
+
+1. `check_eligibility`
+2. `calculate_support`
+3. `list_missing_evidence`
+4. `explain_result`
+5. `prepare_next_steps`
+6. `replay_case`
+7. `derive_benefit_passport`
+8. `get_passport_status`
+9. `plan_application`
+
+Every tool is currently **read-only**. There is no autonomous submit/sign/apply tool.
+
+## Shared capability
+
+The human UI and WebMCP tools use the same `/api/evaluate` capability and deterministic policy engine.
+
+```text
+person → visual UI ─┐
+                    ├→ evaluator → trace → passport → preparation plan
+agent  → WebMCP ────┘
+```
+
+## Grounded 2026 anchors
+
+- Bundesagentur für Arbeit: Kindergeld **€259 / eligible child / month** in 2026
+- Bundesagentur für Arbeit: KiZ **up to €297 / child / month**; final amount requires the official calculation
+- KiZ-Lotse asks for child, income and rent information among its checks
+- Berlin Wohngeld guidance lists recurring evidence categories including income evidence, rental documents and recent rent-payment proof
+- BMAS: KiZ or Wohngeld can unlock Bildung & Teilhabe; **€195 personal school supplies in calendar year 2026**
+
+Official source URLs are embedded directly in `lib/benefits.mjs` and returned to the UI/agent.
 
 ## Run locally
 
-Requires Node 20+.
-
 ```bash
 npm run dev
-# open http://localhost:8888
+# http://localhost:8888
 ```
 
-Then run:
+## Verify
 
 ```bash
-npm test
 npm run check
 ```
 
-The page includes a small WebMCP testing shim only when `document.modelContext` is unavailable. That means ordinary browsers can use the built-in agent simulator, while WebMCP-capable Chromium uses the native API.
+Current deterministic suite: **9 tests** plus a smoke case.
 
-For native WebMCP testing in current Chromium, enable the WebMCP testing flag / origin-trial environment described by Chrome's WebMCP documentation.
+The suite checks, among other things:
 
-## Deploy to Netlify
+- Berlin anchor maths
+- KiZ preliminary floor behaviour
+- stable trace + passport IDs
+- claims/evidence separation
+- conditional downstream rights
+- evidence-reuse service planning
+- explicit unsupported-service failure
 
-```bash
-npm install -g netlify-cli
-netlify login
-netlify init
-netlify deploy --prod
-```
+### Verification boundary
 
-`netlify.toml` already configures the static site, Functions directory and `/api/evaluate` redirect.
+Engine, API shape, JavaScript syntax and deterministic tests are runnable in this repository. In the build environment used for this iteration, automated Chromium was blocked from opening the local dev origin by administrator policy, so a browser E2E pass is **not** claimed here. The UI includes an in-page agent simulator for manual review.
 
-## Safety / trust properties
+## Privacy boundary
 
-- deterministic server-side evaluator for pinned rules
-- explicit distinction between known amount, maximum potential and not-calculated values
-- official source link per benefit
-- stable trace ID for the same household input
-- human-readable decision trace
-- all WebMCP tools marked read-only
-- no application submission, signing or legal-entitlement claim
-- input validation on the server, not only in tool descriptions
+V0.2 uses browser-local storage only after the user explicitly clicks **Save to this browser**. A production identity/evidence layer would need authentication, encryption, selective disclosure, retention controls, explicit consent and an authority-compatible trust model before any real personal documents should be stored.
 
-## Demo case
+## Why this matters
 
-Single parent · 2 children (7, 12) · €2,000 gross income · €1,100 warm rent · Berlin.
+Public services often ask the same household for the same facts and evidence repeatedly. Benefit Bridge explores a safer agent-native alternative:
 
-Expected orientation:
+> **collect once → preserve provenance → reuse with consent → prepare automatically → authorise explicitly**
 
-- **€518/month known Kindergeld anchor** (2 × €259)
-- **up to €594/month KiZ worth checking** (2 × €297 maximum; *not* an entitlement amount)
-- Wohngeld flagged for an official calculation instead of guessed
-
-## Next proof upgrades
-
-1. signed/versioned policy packs with machine-readable source snapshots
-2. official-calculator adapters instead of duplicated complex statutory formulas
-3. Netlify Blobs for privacy-safe session trace persistence
-4. eval suite covering contradictory inputs, stale policy versions and prompt/tool misuse
-5. EUDI/eID selective-disclosure path for “prove once, reuse safely” evidence
-
----
-
-Built by Michael Ninh for the 2026 WebMCP Challenge.
+Built as a public-interest WebMCP proof by Michael Ninh in Berlin.
