@@ -14,6 +14,7 @@ on:
       - 'engine/food_guarantee.py'
       - 'engine/income_kernel.py'
       - 'engine/income_kernel_v2.py'
+      - 'engine/life_event_router.py'
       - 'engine/rights_safe_agent.py'
       - 'engine/rights_safe_policy_v2.py'
       - 'tests/test_openwork.py'
@@ -23,6 +24,7 @@ on:
       - 'tests/test_care_club_router.py'
       - 'tests/test_income_kernel.py'
       - 'tests/test_income_kernel_v2.py'
+      - 'tests/test_life_event_router.py'
       - 'tests/test_rights_safe_agent.py'
       - 'tests/test_rights_safe_policy_v2.py'
       - 'data/openwork_funding_sources.json'
@@ -55,7 +57,7 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install pytest
       - name: Compile deterministic engines
-        run: python -m compileall -q engine/openwork_engine.py engine/family_guarantee.py engine/family_fiscal_model.py engine/food_guarantee.py engine/income_kernel.py engine/income_kernel_v2.py engine/rights_safe_agent.py engine/rights_safe_policy_v2.py openwork/simulate.py family/simulate.py proof/realism_eval.py
+        run: python -m compileall -q engine/openwork_engine.py engine/family_guarantee.py engine/family_fiscal_model.py engine/food_guarantee.py engine/income_kernel.py engine/income_kernel_v2.py engine/life_event_router.py engine/rights_safe_agent.py engine/rights_safe_policy_v2.py openwork/simulate.py family/simulate.py proof/realism_eval.py
       - name: Run OpenWork guarantee tests
         run: python -m pytest -q tests/test_openwork.py
       - name: Run Family Guarantee tests
@@ -65,7 +67,7 @@ jobs:
       - name: Run CARE Club router tests
         run: python -m pytest -q tests/test_care_club_router.py
       - name: Run targeted public-tech proof tests
-        run: python -m pytest -q tests/test_income_kernel.py tests/test_rights_safe_agent.py tests/test_income_kernel_v2.py tests/test_rights_safe_policy_v2.py
+        run: python -m pytest -q tests/test_income_kernel.py tests/test_rights_safe_agent.py tests/test_income_kernel_v2.py tests/test_life_event_router.py tests/test_rights_safe_policy_v2.py
       - name: Run realism V2 evaluation
         run: python proof/realism_eval.py
       - name: Run end-to-end simulators
