@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Benefit Bridge — a WebMCP proof showing how public-benefit websites can expose safe, source-linked tools to people and their AI agents." />
+  <title>Benefit Bridge — WebMCP public benefits proof</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar shell">
+    <a class="brand" href="#top"><span class="brand-mark">B</span><span>Benefit Bridge</span></a>
+    <div class="top-actions">
+      <span id="webmcp-status" class="status-pill"><span class="status-dot"></span>Checking WebMCP…</span>
+      <a class="ghost-link" href="https://github.com/mikelninh" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </div>
+  </header>
+
+  <main id="top" class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">WEBMCP CHALLENGE PROOF · PUBLIC-INTEREST AI</div>
+        <h1>The government website your <span>agent can actually use.</span></h1>
+        <p class="hero-lede">One household input. Clear benefit signals, visible evidence, official sources and agent-callable tools — without scraping buttons or hiding uncertainty.</p>
+        <div class="hero-badges"><span>Deterministic rules</span><span>Source-linked</span><span>Human boundary</span><span>Replayable trace</span></div>
+      </div>
+      <aside class="agent-card">
+        <div class="agent-head"><span class="pulse"></span><span>Agent surface</span><strong>6 tools</strong></div>
+        <div class="tool-mini"><code>check_eligibility</code><span>read only</span></div>
+        <div class="tool-mini"><code>calculate_support</code><span>read only</span></div>
+        <div class="tool-mini"><code>list_missing_evidence</code><span>read only</span></div>
+        <div class="tool-mini"><code>explain_result</code><span>read only</span></div>
+        <div class="tool-mini"><code>prepare_next_steps</code><span>read only</span></div>
+        <div class="tool-mini"><code>replay_case</code><span>read only</span></div>
+      </aside>
+    </section>
+
+    <section class="workspace">
+      <div class="panel input-panel">
+        <div class="panel-heading"><div><span class="section-index">01</span><h2>Household snapshot</h2></div><button id="load-demo" class="text-button" type="button">Load Berlin demo</button></div>
+        <p class="muted">A deliberately small input surface. Benefit Bridge asks only for what the current check needs.</p>
+        <form id="household-form">
+          <div class="segmented" aria-label="Household type">
+            <label><input type="radio" name="householdType" value="single" checked><span>Single parent</span></label>
+            <label><input type="radio" name="householdType" value="couple"><span>Couple</span></label>
+          </div>
+          <div class="field-grid">
+            <label class="field"><span>Gross household income</span><div class="money-input"><span>€</span><input id="income" type="number" min="0" step="50" value="2000" required></div><small>per month</small></label>
+            <label class="field"><span>Warm rent</span><div class="money-input"><span>€</span><input id="rent" type="number" min="0" step="50" value="1100" required></div><small>per month</small></label>
+          </div>
+          <div class="children-block">
+            <div class="field-title"><span>Children</span><button id="add-child" class="text-button" type="button">+ Add child</button></div>
+            <div id="children-list" class="children-list"></div>
+          </div>
+          <label class="check-row"><input id="kindergeld" type="checkbox" checked><span><strong>Currently receives Kindergeld</strong><small>Used as an input signal, not inferred.</small></span></label>
+          <button id="evaluate-button" class="primary-button" type="submit"><span>Check support pathways</span><span>→</span></button>
+        </form>
+        <p class="fineprint">Prototype orientation only. No application is submitted and no legal entitlement is asserted.</p>
+      </div>
+
+      <div class="panel results-panel" id="results-panel" aria-live="polite">
+        <div class="panel-heading"><div><span class="section-index">02</span><h2>Your bridge</h2></div><span id="trace-badge" class="trace-badge">No trace yet</span></div>
+        <div id="empty-state" class="empty-state">
+          <div class="empty-orbit"><span>↗</span></div>
+          <h3>Turn uncertainty into next steps.</h3>
+          <p>Run the household check. The same backend powers this interface and every WebMCP tool.</p>
+        </div>
+        <div id="result-content" class="result-content hidden">
+          <div class="summary-card">
+            <span class="summary-label">CURRENT ORIENTATION</span>
+            <strong id="summary-headline">—</strong>
+            <p id="summary-boundary"></p>
+          </div>
+          <div id="benefit-cards" class="benefit-cards"></div>
+          <div class="split-section">
+            <div><h3>Evidence checklist</h3><div id="evidence-list" class="stack-list"></div></div>
+            <div><h3>Next best actions</h3><div id="next-steps" class="stack-list"></div></div>
+          </div>
+          <details class="trace-details"><summary><span>Inspect decision trace</span><span>Show logic ↓</span></summary><div id="trace-list" class="trace-list"></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-grid">
+      <article><span class="section-index">03</span><h3>Same capability, two interfaces.</h3><p>The person uses the visual flow. The agent gets structured WebMCP tools. Both call the same server-side evaluator, so there is no secret “AI version” of the rules.</p></article>
+      <article><span class="section-index">04</span><h3>Authority stays outside the model.</h3><p>Tools can inspect, calculate anchored values, explain and prepare. They cannot silently apply, submit, sign or claim a statutory entitlement.</p></article>
+      <article><span class="section-index">05</span><h3>Failure becomes inspectable.</h3><p>Every evaluation produces a stable trace ID and explicit rule steps. The replay tool returns the exact evidence and boundary that produced the result.</p></article>
+    </section>
+
+    <section class="simulator panel">
+      <div class="panel-heading"><div><span class="section-index">06</span><h2>Agent simulator</h2></div><span class="lab-pill">LOCAL PROOF HARNESS</span></div>
+      <p class="muted">No WebMCP-enabled browser? This harness invokes the exact same registered tool handlers so reviewers can test the contract anyway.</p>
+      <div class="simulator-grid"><div id="tool-buttons" class="tool-buttons"></div><pre id="tool-output">Select a tool after running a household check.</pre></div>
+    </section>
+  </main>
+
+  <footer class="shell footer"><span>Benefit Bridge · WebMCP proof</span><span>Built for inspectability, not magical thinking.</span></footer>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
