@@ -1,15 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluateHousehold, normalizeHousehold } from '../lib/benefits.mjs';
+import { evaluateHousehold, normalizeHousehold, planService, SERVICE_REQUIREMENTS } from '../lib/benefits.mjs';
+
+const berlinHousehold = {
+  adults: 1,
+  children: [{ age: 7 }, { age: 12 }],
+  monthlyGrossIncome: 2000,
+  warmRent: 1100,
+  receivesKindergeld: true
+};
 
 test('single parent Berlin example exposes anchors without pretending KiZ is exact', () => {
-  const result = evaluateHousehold({
-    adults: 1,
-    children: [{ age: 7 }, { age: 12 }],
-    monthlyGrossIncome: 2000,
-    warmRent: 1100,
-    receivesKindergeld: true
-  });
+  const result = evaluateHousehold(berlinHousehold);
   assert.equal(result.ok, true);
   assert.equal(result.summary.knownMonthly, 518);
   assert.equal(result.summary.potentialAdditionalMax, 594);
@@ -38,7 +40,39 @@ test('invalid household is rejected deterministically', () => {
   assert.ok(result.errors.length > 0);
 });
 
-test('same household yields stable trace id', () => {
-  const input = { adults: 2, children: [{ age: 3 }], monthlyGrossIncome: 1800, warmRent: 800, receivesKindergeld: true };
-  assert.equal(evaluateHousehold(input).traceId, evaluateHousehold(input).traceId);
+test('same household yields stable trace and passport ids', () => {
+  const a = evaluateHousehold(berlinHousehold);
+  const b = evaluateHousehold(berlinHousehold);
+  assert.equal(a.traceId, b.traceId);
+  assert.equal(a.passport.passportId, b.passport.passportId);
+});
+
+test('Benefit Passport separates claims from documentary evidence', () => {
+  const result = evaluateHousehold(berlinHousehold);
+  assert.equal(result.passport.claims.length, 5);
+  assert.equal(result.passport.claims.every((claim) => claim.status === 'self_attested'), true);
+  assert.equal(result.passport.evidence.find((e) => e.id === 'income_proof').status, 'not_prepared');
+  assert.equal(result.passport.reuseSummary.multiServiceEvidenceCategories >= 2, true);
+});
+
+test('downstream Bildung & Teilhabe is conditional, never inferred as current award', () => {
+  const result = evaluateHousehold(berlinHousehold);
+  const but = result.benefits.find((b) => b.id === 'but');
+  assert.equal(but.status, 'conditional_unlock');
+  assert.equal(but.annualAnchor, 195);
+  assert.equal(but.monthlyAmount, null);
+});
+
+test('service planner exposes reusable evidence requirements and human boundary', () => {
+  const result = evaluateHousehold(berlinHousehold);
+  const kizPlan = planService(result, 'kiz');
+  assert.equal(kizPlan.ok, true);
+  assert.deepEqual(SERVICE_REQUIREMENTS.kiz, ['child_household', 'income_proof', 'housing_proof']);
+  assert.ok(kizPlan.stillNeedsHumanEvidence.includes('income_proof'));
+  assert.equal(kizPlan.requiresHumanAction, true);
+});
+
+test('unsupported service plans fail explicitly', () => {
+  const result = evaluateHousehold(berlinHousehold);
+  assert.equal(planService(result, 'magic-money').ok, false);
 });
