@@ -7,16 +7,9 @@ without hiding missing data or provenance.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, Tuple
+from typing import Iterable, Tuple
 
-
-@dataclass(frozen=True)
-class EvidenceItem:
-    key: str
-    monthly_amount: float
-    source: str
-    as_of: str
-    verified: bool = True
+from engine.evidence_packet import EvidenceItem, EvidencePacket
 
 
 @dataclass(frozen=True)
@@ -51,38 +44,38 @@ class IncomeResult:
 
 @dataclass
 class IncomeKernel:
-    evidence: Dict[str, EvidenceItem] = field(default_factory=dict)
+    packet: EvidencePacket = field(default_factory=EvidencePacket)
+
+    @property
+    def evidence(self) -> dict[str, EvidenceItem]:
+        """Compatibility view. New callers should use the packet interface."""
+        return self.packet.as_mapping()
 
     def put(self, item: EvidenceItem) -> None:
-        if item.monthly_amount < 0:
-            raise ValueError("monthly_amount must be >= 0")
-        self.evidence[item.key] = item
+        self.packet.put(item)
 
     def evaluate(self, rule: IncomeRule) -> IncomeResult:
-        missing = tuple(k for k in rule.included_keys if k not in self.evidence)
-        if missing:
+        check = self.packet.require(rule.included_keys)
+        if check.missing:
             return IncomeResult(
                 status="NEEDS_DATA",
                 rule_id=rule.rule_id,
                 rule_version=rule.version,
                 countable_income=None,
-                missing=missing,
+                missing=check.missing,
             )
 
-        unverified = tuple(
-            k for k in rule.included_keys if not self.evidence[k].verified
-        )
-        if unverified:
+        if check.unverified:
             return IncomeResult(
                 status="NEEDS_REVIEW",
                 rule_id=rule.rule_id,
                 rule_version=rule.version,
                 countable_income=None,
-                unverified=unverified,
+                unverified=check.unverified,
                 trace=tuple(self._trace(rule)),
             )
 
-        gross = sum(self.evidence[k].monthly_amount for k in rule.included_keys)
+        gross = sum(self.packet.value(key) for key in rule.included_keys)
         result = gross * (1 - rule.deduction_rate)
         return IncomeResult(
             status="READY",
@@ -94,8 +87,7 @@ class IncomeKernel:
 
     def _trace(self, rule: IncomeRule) -> Iterable[TraceItem]:
         included = set(rule.included_keys)
-        for key in sorted(self.evidence):
-            item = self.evidence[key]
+        for key, item in self.packet.items():
             yield TraceItem(
                 key=key,
                 amount=item.monthly_amount,
@@ -130,3 +122,14 @@ PROOF_RULES = {
         deduction_rate=0.05,
     ),
 }
+
+# Backward-compatible import surface for existing callers/tests.
+__all__ = [
+    "EvidenceItem",
+    "EvidencePacket",
+    "IncomeKernel",
+    "IncomeResult",
+    "IncomeRule",
+    "PROOF_RULES",
+    "TraceItem",
+]
