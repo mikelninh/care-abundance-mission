@@ -1,0 +1,47 @@
+name: Benefit Bridge launch checks
+
+on:
+  push:
+    branches:
+      - feat/benefit-bridge-webmcp
+    paths:
+      - 'benefit-bridge-webmcp/**'
+      - '.github/workflows/benefit-bridge.yml'
+  pull_request:
+    paths:
+      - 'benefit-bridge-webmcp/**'
+      - '.github/workflows/benefit-bridge.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: benefit-bridge-webmcp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Deterministic tests + smoke flow
+        run: npm run check
+
+      - name: Syntax checks
+        run: |
+          node --check public/app.js
+          node --check public/packet-core.js
+          node --check public/v03.js
+          node --check public/v03-simulator.js
+          node --check netlify/functions/evaluate.mjs
+
+      - name: Authority-boundary guard
+        run: |
+          if grep -R -n -E "name:[[:space:]]*['\"](submit_application|sign_application|upload_to_authority|authenticate_as_user)['\"]" public lib netlify; then
+            echo 'Forbidden consequential tool detected.'
+            exit 1
+          fi
+          echo 'No forbidden consequential WebMCP tools found.'
