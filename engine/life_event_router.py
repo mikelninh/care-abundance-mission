@@ -11,6 +11,7 @@ statutory facts for that service.
 """
 
 from dataclasses import dataclass
+import math
 from typing import Dict, Tuple
 
 from engine.income_kernel import EvidenceItem
@@ -41,6 +42,44 @@ class LifeEventPlan:
     note: str = (
         "Routing/precheck only. A route is not a legal entitlement decision."
     )
+
+
+_BOOLEAN_FIELDS = frozenset({
+    "registered_unemployed",
+    "available_15h",
+    "has_minor_child",
+    "pays_income_tax",
+    "pays_health_care",
+    "pays_pension",
+})
+_INTEGER_FIELDS = frozenset({"adults", "children", "insured_months_30"})
+
+
+def _validate_evidence(evidence: Dict[str, EvidenceItem]) -> None:
+    """Reject structurally impossible evidence instead of silently calculating.
+
+    Unknown or unverified is allowed and handled by the downstream NEEDS_DATA
+    states. Structurally invalid values are different: negative money/counts,
+    NaN/Infinity, mismatched provenance keys or non-boolean flags would poison
+    every coordinated route, so the router fails closed before reuse.
+    """
+    for key, item in evidence.items():
+        if item.key != key:
+            raise ValueError(f"evidence key mismatch: map={key!r}, item={item.key!r}")
+        value = float(item.monthly_amount)
+        if not math.isfinite(value):
+            raise ValueError(f"{key} must be finite")
+        if value < 0:
+            raise ValueError(f"{key} must be >= 0")
+        if key in _BOOLEAN_FIELDS and value not in (0.0, 1.0):
+            raise ValueError(f"{key} must be 0 or 1")
+        if key in _INTEGER_FIELDS and not value.is_integer():
+            raise ValueError(f"{key} must be an integer")
+
+    if "adults" in evidence and evidence["adults"].verified and _value(evidence, "adults") < 1:
+        raise ValueError("adults must be >= 1 for this household slice")
+    if "insured_months_30" in evidence and evidence["insured_months_30"].verified and _value(evidence, "insured_months_30") > 30:
+        raise ValueError("insured_months_30 must be <= 30")
 
 
 def _verified(evidence: Dict[str, EvidenceItem], key: str) -> bool:
@@ -179,6 +218,7 @@ def _grundsicherung_route(evidence: Dict[str, EvidenceItem]) -> ServiceRoute:
 
 def route_income_loss(evidence: Dict[str, EvidenceItem]) -> LifeEventPlan:
     """Prepare four coordinated routes from one verified evidence packet."""
+    _validate_evidence(evidence)
     routes = (
         _alg1_precheck(evidence),
         _kiz_route(evidence),
