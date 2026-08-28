@@ -15,9 +15,9 @@ across genuinely different statutory definitions without hiding missing data.
 """
 
 from dataclasses import dataclass
-from typing import Dict, FrozenSet, Tuple
+from typing import Dict, FrozenSet, Mapping, Tuple
 
-from engine.income_kernel import EvidenceItem
+from engine.evidence_packet import EvidenceItem, EvidencePacket
 
 
 RULE_VERSION = "DE-2026-08-v2"
@@ -54,16 +54,19 @@ class Projection:
     note: str = ""
 
 
-def _amount(evidence: Dict[str, EvidenceItem], key: str) -> float:
-    return evidence[key].monthly_amount
+EvidenceInput = Mapping[str, EvidenceItem] | EvidencePacket
 
 
-def _bool(evidence: Dict[str, EvidenceItem], key: str) -> bool:
-    return bool(round(_amount(evidence, key)))
+def _packet(evidence: EvidenceInput) -> EvidencePacket:
+    return EvidencePacket.from_mapping(evidence)
 
 
-def _require(evidence: Dict[str, EvidenceItem], keys: FrozenSet[str]) -> Tuple[str, ...]:
-    return tuple(sorted(k for k in keys if k not in evidence or not evidence[k].verified))
+def _missing(packet: EvidencePacket, keys: FrozenSet[str]) -> Tuple[str, ...]:
+    check = packet.require(keys)
+    # These public-service projection slices deliberately collapse missing and
+    # unverified required facts to NEEDS_DATA. The packet still preserves the
+    # distinction for callers that need it.
+    return tuple(sorted((*check.missing, *check.unverified)))
 
 
 def sgb2_standard_earned_income_allowance(gross: float, has_minor_child: bool) -> float:
@@ -77,27 +80,28 @@ def sgb2_standard_earned_income_allowance(gross: float, has_minor_child: bool) -
     return round(allowance, 2)
 
 
-def project_grundsicherung(evidence: Dict[str, EvidenceItem]) -> Projection:
+def project_grundsicherung(evidence: EvidenceInput) -> Projection:
+    packet = _packet(evidence)
     required = SERVICE_FIELDS["grundsicherung"]
-    missing = _require(evidence, required)
+    missing = _missing(packet, required)
     if missing:
         return Projection("Grundsicherung", "NEEDS_DATA", None, "EUR/month",
                           RULE_VERSION, (), missing=missing,
                           note="Countable-income slice only; no final entitlement.")
 
-    gross = _amount(evidence, "employment_gross")
-    net = _amount(evidence, "employment_net")
+    gross = packet.value("employment_gross")
+    net = packet.value("employment_net")
     allowance = sgb2_standard_earned_income_allowance(
-        gross, _bool(evidence, "has_minor_child")
+        gross, packet.boolean("has_minor_child")
     )
     countable_earned = max(0.0, net - allowance)
     countable = (
         countable_earned
-        + _amount(evidence, "alg1_monthly")
-        + _amount(evidence, "maintenance")
-        + _amount(evidence, "capital_income")
-        + _amount(evidence, "child_benefit")
-        + _amount(evidence, "child_supplement")
+        + packet.value("alg1_monthly")
+        + packet.value("maintenance")
+        + packet.value("capital_income")
+        + packet.value("child_benefit")
+        + packet.value("child_supplement")
     )
     return Projection(
         "Grundsicherung", "READY", round(countable, 2), "EUR/month",
@@ -106,22 +110,23 @@ def project_grundsicherung(evidence: Dict[str, EvidenceItem]) -> Projection:
     )
 
 
-def project_kiz_minimum(evidence: Dict[str, EvidenceItem]) -> Projection:
+def project_kiz_minimum(evidence: EvidenceInput) -> Projection:
+    packet = _packet(evidence)
     required = SERVICE_FIELDS["kiz_minimum"]
-    missing = _require(evidence, required)
+    missing = _missing(packet, required)
     if missing:
         return Projection("Kinderzuschlag minimum gate", "NEEDS_DATA", None, "gate",
                           RULE_VERSION, (), missing=missing,
                           note="Minimum-income gate only; no final KiZ amount.")
 
-    adults = int(round(_amount(evidence, "adults")))
-    children = int(round(_amount(evidence, "children")))
+    adults = packet.integer("adults")
+    children = packet.integer("children")
     threshold = 600.0 if adults == 1 else 900.0
     relevant_income = (
-        _amount(evidence, "employment_gross")
-        + _amount(evidence, "alg1_monthly")
-        + _amount(evidence, "maintenance")
-        + _amount(evidence, "capital_income")
+        packet.value("employment_gross")
+        + packet.value("alg1_monthly")
+        + packet.value("maintenance")
+        + packet.value("capital_income")
     )
     status = "MEETS_MINIMUM" if children > 0 and relevant_income >= threshold else "BELOW_MINIMUM"
     return Projection(
@@ -132,24 +137,25 @@ def project_kiz_minimum(evidence: Dict[str, EvidenceItem]) -> Projection:
     )
 
 
-def project_wohngeld_income(evidence: Dict[str, EvidenceItem]) -> Projection:
+def project_wohngeld_income(evidence: EvidenceInput) -> Projection:
+    packet = _packet(evidence)
     required = SERVICE_FIELDS["wohngeld_income"]
-    missing = _require(evidence, required)
+    missing = _missing(packet, required)
     if missing:
         return Projection("Wohngeld income", "NEEDS_DATA", None, "EUR/month",
                           RULE_VERSION, (), missing=missing,
                           note="Income slice only; no final Wohngeld amount.")
 
     base = (
-        _amount(evidence, "employment_wogg_basis")
-        + _amount(evidence, "alg1_monthly")
-        + _amount(evidence, "maintenance")
-        + _amount(evidence, "capital_income")
+        packet.value("employment_wogg_basis")
+        + packet.value("alg1_monthly")
+        + packet.value("maintenance")
+        + packet.value("capital_income")
     )
     deductions = sum([
-        _bool(evidence, "pays_income_tax"),
-        _bool(evidence, "pays_health_care"),
-        _bool(evidence, "pays_pension"),
+        packet.boolean("pays_income_tax"),
+        packet.boolean("pays_health_care"),
+        packet.boolean("pays_pension"),
     ])
     projected = base * (1.0 - 0.10 * deductions)
     return Projection(
@@ -160,16 +166,17 @@ def project_wohngeld_income(evidence: Dict[str, EvidenceItem]) -> Projection:
     )
 
 
-def project_alg1_rate(evidence: Dict[str, EvidenceItem]) -> Projection:
+def project_alg1_rate(evidence: EvidenceInput) -> Projection:
+    packet = _packet(evidence)
     required = SERVICE_FIELDS["alg1_rate"]
-    missing = _require(evidence, required)
+    missing = _missing(packet, required)
     if missing:
         return Projection("Arbeitslosengeld I rate", "NEEDS_DATA", None, "EUR/month",
                           RULE_VERSION, (), missing=missing,
                           note="Requires Leistungsentgelt from the upstream SGB III tax/assessment calculation.")
 
-    daily_leistungsentgelt = _amount(evidence, "alg1_leistungsentgelt_daily")
-    children = int(round(_amount(evidence, "children")))
+    daily_leistungsentgelt = packet.value("alg1_leistungsentgelt_daily")
+    children = packet.integer("children")
     rate = 0.67 if children > 0 else 0.60
     monthly = daily_leistungsentgelt * rate * 30.0
     return Projection(
