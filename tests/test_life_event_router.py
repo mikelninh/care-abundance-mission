@@ -1,3 +1,7 @@
+import math
+
+import pytest
+
 from engine.income_kernel import EvidenceItem
 from engine.life_event_router import route_income_loss
 
@@ -83,3 +87,88 @@ def test_verified_packet_is_reused_across_routes():
     assert "children" in plan.reused_verified_fields
     assert "alg1_leistungsentgelt_daily" in plan.reused_verified_fields
     assert len(plan.reused_verified_fields) >= 15
+
+
+def test_unverified_shared_income_fact_blocks_every_dependent_projection():
+    evidence = base_packet()
+    evidence["maintenance"] = item("maintenance", 250, verified=False)
+    routes = by_service(route_income_loss(evidence))
+    assert routes["Kinderzuschlag"].state == "NEEDS_DATA"
+    assert routes["Wohngeld"].state == "NEEDS_DATA"
+    assert routes["Grundsicherungsgeld"].state == "NEEDS_DATA"
+    assert routes["Arbeitslosengeld I"].state == "CHECK_NOW"
+
+
+def test_multiple_missing_facts_remain_explicit_instead_of_becoming_zero():
+    evidence = base_packet()
+    evidence.pop("insured_months_30")
+    evidence.pop("employment_wogg_basis")
+    plan = route_income_loss(evidence)
+    routes = by_service(plan)
+    assert routes["Arbeitslosengeld I"].state == "NEEDS_DATA"
+    assert routes["Wohngeld"].state == "NEEDS_DATA"
+    assert "insured_months_30" in plan.missing_shared_fields
+    assert "employment_wogg_basis" in plan.missing_shared_fields
+
+
+@pytest.mark.parametrize("field", [
+    "employment_gross",
+    "employment_net",
+    "maintenance",
+    "children",
+    "insured_months_30",
+    "alg1_leistungsentgelt_daily",
+])
+def test_negative_values_fail_closed_before_any_route_is_prepared(field):
+    evidence = base_packet()
+    evidence[field] = item(field, -1)
+    with pytest.raises(ValueError, match=field):
+        route_income_loss(evidence)
+
+
+@pytest.mark.parametrize("bad", [math.nan, math.inf, -math.inf])
+def test_non_finite_values_fail_closed(bad):
+    evidence = base_packet()
+    evidence["employment_net"] = item("employment_net", bad)
+    with pytest.raises(ValueError, match="finite"):
+        route_income_loss(evidence)
+
+
+def test_evidence_key_mismatch_fails_closed_to_protect_provenance():
+    evidence = base_packet()
+    evidence["children"] = item("adults", 1)
+    with pytest.raises(ValueError, match="key mismatch"):
+        route_income_loss(evidence)
+
+
+@pytest.mark.parametrize("field", [
+    "registered_unemployed",
+    "available_15h",
+    "has_minor_child",
+    "pays_income_tax",
+    "pays_health_care",
+    "pays_pension",
+])
+def test_boolean_evidence_rejects_ambiguous_numeric_flags(field):
+    evidence = base_packet()
+    evidence[field] = item(field, 2)
+    with pytest.raises(ValueError, match="0 or 1"):
+        route_income_loss(evidence)
+
+
+def test_household_counts_must_be_integral_and_have_at_least_one_adult():
+    fractional = base_packet()
+    fractional["children"] = item("children", 1.5)
+    with pytest.raises(ValueError, match="integer"):
+        route_income_loss(fractional)
+
+    no_adult = base_packet()
+    no_adult["adults"] = item("adults", 0)
+    with pytest.raises(ValueError, match="adults must be >= 1"):
+        route_income_loss(no_adult)
+
+
+def test_insured_months_cannot_exceed_the_30_month_window():
+    evidence = base_packet(insured_months=31)
+    with pytest.raises(ValueError, match="<= 30"):
+        route_income_loss(evidence)

@@ -37,6 +37,28 @@ See [`docs/CARE_CLUB_BERLIN.md`](docs/CARE_CLUB_BERLIN.md) and [`data/berlin_act
 
 ---
 
+## Public-service proof — Income-Loss Router
+
+> **One life event. Facts once. Four coordinated official checks. No invented entitlement.**
+
+`Income loss → verified evidence packet → ALG I + Kinderzuschlag + Wohngeld + Grundsicherung → missing facts stay missing → official decision remains official`
+
+**[Try the interactive synthetic demo →](https://mikelninh.github.io/proof/digitalservice/life-event.html)**
+
+The router is a deterministic **routing/precheck layer, not a benefits calculator or Bescheid engine**. It reuses verified evidence across four service journeys while preserving different statutory definitions and service-specific missing facts.
+
+Release-safety rules:
+
+- missing or unverified evidence produces `NEEDS_DATA`; **missing never becomes zero**;
+- structurally impossible evidence fails closed before reuse: negative values, `NaN`/∞, provenance-key mismatch, ambiguous boolean flags, fractional counts and impossible declared ranges;
+- a failed standard ALG-I gate does not hide the safety-net route;
+- route labels such as `CHECK_NOW` or `CHECK_PARALLEL` mean “continue the official check”, never “approved”;
+- no automated individual entitlement or binding public decision.
+
+See [`docs/INCOME_LOSS_ROUTER.md`](docs/INCOME_LOSS_ROUTER.md), [`engine/life_event_router.py`](engine/life_event_router.py) and [`tests/test_life_event_router.py`](tests/test_life_event_router.py).
+
+---
+
 ## Guarantee 1 — OpenWork
 
 > **Work is funded → you can start.**
@@ -128,6 +150,7 @@ See [`docs/FOOD_GUARANTEE.md`](docs/FOOD_GUARANTEE.md), [`engine/food_guarantee.
 | Product | Core question |
 |---|---|
 | **CARE Club Berlin** | Can someone find help, help, or join the build in two clicks today? |
+| **Income-Loss Router** | Can one verified evidence packet prepare the right official checks without inventing eligibility? |
 | **OpenWork** | What useful work needs doing, who can do it, and is fair pay guaranteed before start? |
 | **Family Guarantee** | Is every known child in a household above the protected floor, and did the top-up land? |
 | **Food Guarantee** | Does every eligible person have adequate food access despite money/admin failure? |
@@ -147,20 +170,27 @@ python -m pytest -q tests/test_openwork.py
 python -m pytest -q tests/test_family_guarantee.py tests/test_family_fiscal_model.py
 python -m pytest -q tests/test_food_guarantee.py
 python -m pytest -q tests/test_care_club_router.py
+python -m pytest -q tests/test_income_kernel.py tests/test_income_kernel_v2.py tests/test_life_event_router.py
+python -m pytest -q tests/test_rights_safe_agent.py tests/test_rights_safe_policy_v2.py
 python openwork/simulate.py
 python family/simulate.py
 ```
 
-Hosted GitHub Actions Run #26 passed on the CARE Club action-router build.
+`CARE Guarantees proof` runs the deterministic proof suite on relevant pull requests and again after relevant merges to `main`.
+
+## Proof boundaries
+
+CARE separates **engineering proof** from **real-world proof**. Passing synthetic tests does not prove national affordability, production authority integration, legal completeness or real household outcomes. Those require representative data, institutional partners, live delivery evidence and external review.
 
 ## Next real-world proofs
 
 1. **CARE Berlin #001:** one real action + five activated people + one frontline conversation + one anonymous system gap.
 2. **Family Guarantee shadow pilot:** one benefits-advice/municipal partner, current-law vs CARE calculations, no money moved initially.
 3. **Food/Family top-up pilot:** ring-fenced incremental fund for a defined cohort; measure food-access gap and poverty gap closed.
-4. **OpenWork first GREEN mission:** real need + employer/payroll + binding funding + liquidity + worker + paid result.
-5. Join the loops: prove a participating household can stay food-secure and above the floor while moving into paid work without an income cliff.
-6. Microsimulate national Family/Food Guarantee fiscal cost before making any affordability claim.
+4. **Income-Loss shadow journey:** run the shared packet against real anonymised advisory cases and compare missing-fact capture/routing with human benefits advice — no automated decision.
+5. **OpenWork first GREEN mission:** real need + employer/payroll + binding funding + liquidity + worker + paid result.
+6. Join the loops: prove a participating household can stay food-secure and above the floor while moving into paid work without an income cliff.
+7. Microsimulate national Family/Food Guarantee fiscal cost before making any affordability claim.
 
 See [`ROADMAP.md`](ROADMAP.md).
 
