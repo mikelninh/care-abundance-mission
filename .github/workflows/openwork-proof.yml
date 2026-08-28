@@ -34,10 +34,27 @@ on:
       - 'docs/FAMILY_GUARANTEE*'
       - 'docs/FOOD_GUARANTEE*'
       - 'docs/CARE_CLUB*'
+      - 'docs/INCOME_LOSS*'
       - 'docs/REALISM_PROOF_V2.md'
       - 'docs/OUTREACH_DIGITALSERVICE_AGORA.md'
       - 'agents/openwork_funding_watch.md'
       - 'agents/family_safety_watch.md'
+      - 'README.md'
+      - '.github/workflows/openwork-proof.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'openwork/**'
+      - 'family/**'
+      - 'food/**'
+      - 'club/**'
+      - 'proof/**'
+      - 'engine/**'
+      - 'tests/**'
+      - 'data/**'
+      - 'docs/**'
+      - 'agents/**'
+      - 'README.md'
       - '.github/workflows/openwork-proof.yml'
   workflow_dispatch:
 
